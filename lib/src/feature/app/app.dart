@@ -2,9 +2,15 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:schedule/src/feature/app/bloc/app_bloc.dart';
+import 'package:schedule/src/feature/app/routes/routes.dart';
+import 'package:schedule/src/theme.dart';
 
 class App extends StatelessWidget {
-  const App({required AuthenticationRepository authentificationRepository, super.key,}) : _authenticationRepository = authentificationRepository;
+  const App({
+    required AuthenticationRepository authentificationRepository,
+    super.key,
+  }) : _authenticationRepository = authentificationRepository;
 
   final AuthenticationRepository _authenticationRepository;
 
@@ -16,7 +22,7 @@ class App extends StatelessWidget {
         lazy: false,
         create: (_) => AppBloc(
           authenticationRepository: _authenticationRepository,
-        )..add(const AppUserSubscribtionRequest()),
+        )..add(AppUserSubscriptionRequested()),
         child: const AppScreen(),
       ),
     );
@@ -29,10 +35,11 @@ class AppScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: FlowBuilder(
-        state: context.select((AppBloc bloc)),
-        onGeneratePages: onGenerateAppViewPages
-        ),
+      theme: theme,
+      home: FlowBuilder<AppStatus>(
+        state: context.select((AppBloc bloc) => bloc.state.status),
+        onGeneratePages: onGenerateAppViewPages,
+      ),
     );
   }
 }
