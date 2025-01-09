@@ -50,8 +50,9 @@ class LoginCubit extends Cubit<LoginState> {
         status: FormzSubmissionStatus.failure,
         errorMessage: e.message,
       ));
-    } catch (_) {
+    } catch (e) {
       emit(state.copyWith(status: FormzSubmissionStatus.failure));
+      print(e.toString());
     }
   }
 }
