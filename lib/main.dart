@@ -4,7 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:schedule/firebase_options.dart';
 import 'package:schedule/src/common/bloc/AppBlocObserver.dart';
-import 'package:schedule/src/feature/app/app.dart';
+import 'package:schedule/src/features/app/app.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

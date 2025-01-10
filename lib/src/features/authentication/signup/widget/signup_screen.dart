@@ -1,8 +1,8 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:schedule/src/feature/authentication/signup/cubit/signup_cubit.dart';
-import 'package:schedule/src/feature/authentication/signup/widget/signup_form.dart';
+import 'package:schedule/src/features/authentication/signup/cubit/signup_cubit.dart';
+import 'package:schedule/src/features/authentication/signup/widget/signup_form.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});

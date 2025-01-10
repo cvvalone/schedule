@@ -23,6 +23,8 @@ dependencies:
   google_fonts: ^6.2.1
   meta: ^1.7.0
   google_sign_in:
+  http:
+  dio: ^5.4.0
 
 dev_dependencies:
   bloc_test: ^9.0.0

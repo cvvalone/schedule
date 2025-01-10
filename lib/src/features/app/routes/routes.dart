@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:schedule/src/feature/app/bloc/app_bloc.dart';
-import 'package:schedule/src/feature/authentication/authertication.dart';
-import 'package:schedule/src/feature/home/widget/home_page.dart';
+import 'package:schedule/src/features/app/bloc/app_bloc.dart';
+import 'package:schedule/src/features/authentication/authertication.dart';
+import 'package:schedule/src/features/home/widget/home_page.dart';
 
 List<Page<dynamic>> onGenerateAppViewPages(
     AppStatus state, List<Page<dynamic>> pages) {

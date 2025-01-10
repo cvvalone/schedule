@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:formz/formz.dart';
-import 'package:schedule/src/feature/authentication/login/cubit/login_cubit.dart';
-import 'package:schedule/src/feature/authentication/signup/widget/signup_screen.dart';
+import 'package:schedule/src/features/authentication/login/cubit/login_cubit.dart';
+import 'package:schedule/src/features/authentication/signup/widget/signup_screen.dart';
+import 'package:schedule/src/utils/constants/sizes.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({super.key});
@@ -28,15 +29,31 @@ class LoginForm extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const SizedBox(height: 16),
+              const SizedBox(
+                height: ScheduleSizes.spaceBetweenSections,
+              ),
               _EmailInput(),
-              const SizedBox(height: 8),
+              const SizedBox(height: ScheduleSizes.spaceBetweenItems),
               _PasswordInput(),
-              const SizedBox(height: 8),
+              const SizedBox(height: ScheduleSizes.spaceBetweenItems),
               _LoginButton(),
-              const SizedBox(height: 8),
+              const SizedBox(height: ScheduleSizes.spaceBetweenItems),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "або",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.grey[700],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: ScheduleSizes.spaceBetweenItems),
               _GoogleLoginButton(),
-              const SizedBox(height: 4),
+              const SizedBox(height: ScheduleSizes.spaceBetweenItems),
               _SignUpButton(),
             ],
           ),
@@ -58,7 +75,7 @@ class _EmailInput extends StatelessWidget {
       onChanged: (email) => context.read<LoginCubit>().emailChanged(email),
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
-        labelText: 'email',
+        labelText: 'Пошта',
         helperText: '',
         errorText: displayError != null ? 'invalid email' : null,
       ),
@@ -79,7 +96,7 @@ class _PasswordInput extends StatelessWidget {
           context.read<LoginCubit>().passwordChanged(password),
       obscureText: true,
       decoration: InputDecoration(
-        labelText: 'password',
+        labelText: 'Пароль',
         helperText: '',
         errorText: displayError != null ? 'invalid password' : null,
       ),
@@ -102,16 +119,10 @@ class _LoginButton extends StatelessWidget {
 
     return ElevatedButton(
       key: const Key('loginForm_continue_raisedButton'),
-      style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
-        backgroundColor: const Color(0xFFFFD600),
-      ),
       onPressed: isValid
           ? () => context.read<LoginCubit>().logInWithCredentials()
           : null,
-      child: const Text('LOGIN'),
+      child: const Text('УВІЙТИ'),
     );
   }
 }
@@ -123,14 +134,8 @@ class _GoogleLoginButton extends StatelessWidget {
     return ElevatedButton.icon(
       key: const Key('loginForm_googleLogin_raisedButton'),
       label: const Text(
-        'SIGN IN WITH GOOGLE',
+        'УВІЙТИ ЗА ДОПОМОГОЮ GOOGLE',
         style: TextStyle(color: Colors.white),
-      ),
-      style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
-        backgroundColor: theme.colorScheme.secondary,
       ),
       icon: const Icon(FontAwesomeIcons.google, color: Colors.white),
       onPressed: () => context.read<LoginCubit>().logInWithGoogle(),
@@ -146,8 +151,8 @@ class _SignUpButton extends StatelessWidget {
       key: const Key('loginForm_createAccount_flatButton'),
       onPressed: () => Navigator.of(context).push<void>(SignUpScreen.route()),
       child: Text(
-        'CREATE ACCOUNT',
-        style: TextStyle(color: theme.primaryColor),
+        'СТВОРИТИ АКАУНТ',
+        style: TextStyle(color: theme.primaryColor, ),
       ),
     );
   }

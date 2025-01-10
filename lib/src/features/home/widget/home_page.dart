@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:schedule/src/feature/home/home.dart';
-import 'package:schedule/src/feature/app/bloc/app_bloc.dart';
+import 'package:schedule/src/features/app/bloc/app_bloc.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

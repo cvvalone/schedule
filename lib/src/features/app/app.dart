@@ -2,9 +2,9 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:schedule/src/feature/app/bloc/app_bloc.dart';
-import 'package:schedule/src/feature/app/routes/routes.dart';
-import 'package:schedule/src/theme.dart';
+import 'package:schedule/src/features/app/bloc/app_bloc.dart';
+import 'package:schedule/src/features/app/routes/routes.dart';
+import 'package:schedule/src/utils/theme/theme.dart';
 
 class App extends StatelessWidget {
   const App({
@@ -35,7 +35,9 @@ class AppScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: theme,
+      themeMode: ThemeMode.system,
+      theme: ScheduleTheme.lightTheme,
+      darkTheme: ScheduleTheme.darkTheme,
       home: FlowBuilder<AppStatus>(
         state: context.select((AppBloc bloc) => bloc.state.status),
         onGeneratePages: onGenerateAppViewPages,

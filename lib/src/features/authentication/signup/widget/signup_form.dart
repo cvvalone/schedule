@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:schedule/src/feature/authentication/signup/cubit/signup_cubit.dart';
+import 'package:schedule/src/features/authentication/signup/cubit/signup_cubit.dart';
 
 class SignUpForm extends StatelessWidget {
   const SignUpForm({super.key});
