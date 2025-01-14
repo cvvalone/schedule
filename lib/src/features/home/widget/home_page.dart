@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule/src/features/app/bloc/app_bloc.dart';
+import 'package:schedule/src/features/daily/bloc/daily_bloc.dart';
+import 'package:schedule/src/features/daily/view/daily_screen.dart';
 import 'package:schedule/src/features/home/widget/home_screen.dart';
 
 class HomePage extends StatefulWidget {
@@ -29,7 +31,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     final user = context.select((AppBloc bloc) => bloc.state.user);
     final String? photo = user.photo;
     return Scaffold(
@@ -46,16 +47,20 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: PageView(
-        onPageChanged: (value){
+        onPageChanged: (value) {
           setState(() {
             _selectedIndex = value;
           });
         },
         controller: _pageController,
         children: [
-          HomeScreen(photo: photo, user: user,),
-          Scaffold(
-            body: Text("second"),
+          HomeScreen(
+            photo: photo,
+            user: user,
+          ),
+          BlocProvider(
+            create: (context) => DailyBloc(),
+            child: DailyScreen(),
           ),
           Scaffold(
             body: Text("third"),
