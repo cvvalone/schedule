@@ -21,6 +21,9 @@ class _DailyScreenState extends State<DailyScreen> {
         padding: const EdgeInsets.all(8.0),
         child: BlocBuilder<DailyBloc, DailyState>(
           builder: (context, state) {
+            if(state is DailyLoading){
+              return Center(child: CircularProgressIndicator(),);
+            }
             if (state is DailyLoaded) {
               return ListView.builder(
                 itemCount: state.tasks.length,
@@ -40,8 +43,9 @@ class _DailyScreenState extends State<DailyScreen> {
                   );
                 },
               );
-            }
+            }else{
             return Center(child: Text('Цілей поки немає.'));
+            }
           },
         ),
       ),

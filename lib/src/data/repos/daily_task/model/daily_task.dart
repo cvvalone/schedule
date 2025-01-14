@@ -1,6 +1,17 @@
+import 'package:hive/hive.dart';
+
+part 'daily_task.g.dart';
+
+@HiveType(typeId: 0)
 class DailyTask {
+  
+  @HiveField(0)
   final String title;
+  
+  @HiveField(1)
   final String id;
+  
+  @HiveField(2)
   final bool isCompleted;
 
   DailyTask({

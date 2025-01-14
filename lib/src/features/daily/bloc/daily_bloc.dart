@@ -1,49 +1,44 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:hive/hive.dart';
 import 'package:schedule/src/data/repos/daily_task/model/daily_task.dart';
 
 part 'daily_event.dart';
 part 'daily_state.dart';
 
 class DailyBloc extends Bloc<DailyEvent, DailyState> {
-  DailyBloc() : super(DailyInitial()) {
-    on<AddDailyTask>(_addDailyTask);
-    on<ToggleDailyStatus>(_toggleDailyStatus);
-    on<DeleteDailyTask>(_deleteDailyTask);
+  final Box<DailyTask> taskBox;
+  
+  DailyBloc(this.taskBox) : super(DailyLoading()) {
+    on<LoadDailyTask>(_onLoadDailyTask);
+    on<AddDailyTask>(_onAddDailyTask);
+    on<ToggleDailyStatus>(_onToggleDailyStatus);
+    on<DeleteDailyTask>(_onDeleteDailyTask);
   }
 
-  void _addDailyTask(AddDailyTask event, Emitter<DailyState> emit) {
-    final currentState = state;
-    if (currentState is DailyLoaded) {
-      final newTask =
-          DailyTask(title: event.title, id: DateTime.now().toString());
-      emit(DailyLoaded([...currentState.tasks, newTask]));
-    } else {
-      emit(DailyLoaded(
-          [DailyTask(title: event.title, id: DateTime.now().toString())]));
+  Future<void> _onLoadDailyTask (LoadDailyTask event, Emitter<DailyState> emit) async {
+    final tasks = taskBox.values.toList();
+    emit(DailyLoaded(tasks));
+  }
+
+  void _onAddDailyTask(AddDailyTask event, Emitter<DailyState> emit) async {
+    final newTask = DailyTask(title: event.title, id: DateTime.now().toString());
+    await taskBox.add(newTask);
+    add(LoadDailyTask());
+  }
+
+  Future<void> _onToggleDailyStatus(ToggleDailyStatus event, Emitter<DailyState> emit) async {
+    final task = taskBox.get(event.id);
+    if(task != null){
+      final updatedTask = task.copyWith(isCompleted: !task.isCompleted);
+      await taskBox.put(event.id, updatedTask);
+      add(LoadDailyTask());
     }
   }
 
-  void _toggleDailyStatus(ToggleDailyStatus event, Emitter<DailyState> emit) {
-    final currentState = state;
-    if (currentState is DailyLoaded) {
-      final updatedTasks = currentState.tasks.map(
-        (task) {
-          if (task.id == event.id) {
-            return task.copyWith(isCompleted: !task.isCompleted);
-          }
-          return task;
-        },
-      ).toList();
-      emit(DailyLoaded(updatedTasks));
-    }
-  }
+  Future<void> _onDeleteDailyTask(DeleteDailyTask event, Emitter<DailyState> emit) async {
+    await taskBox.delete(event.id);
+    add(LoadDailyTask());
 
-  void _deleteDailyTask(DeleteDailyTask event, Emitter<DailyState> emit) {
-    final currentState = state;
-    if (currentState is DailyLoaded) {
-      final updatedTasks =
-          currentState.tasks.where((task) => task.id != event.id).toList();
-      emit(DailyLoaded(updatedTasks));
-    }
   }
 }

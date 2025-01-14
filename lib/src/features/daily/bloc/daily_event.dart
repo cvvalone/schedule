@@ -1,24 +1,24 @@
-
 part of 'daily_bloc.dart';
-
 
 abstract class DailyEvent {
   const DailyEvent();
 }
 
-class AddDailyTask extends DailyEvent{
+class LoadDailyTask extends DailyEvent {}
+
+class AddDailyTask extends DailyEvent {
   final String title;
 
   AddDailyTask(this.title);
 }
 
-class DeleteDailyTask extends DailyEvent{
+class DeleteDailyTask extends DailyEvent {
   final String id;
-  
+
   DeleteDailyTask(this.id);
 }
 
-class ToggleDailyStatus extends DailyEvent{
+class ToggleDailyStatus extends DailyEvent {
   final String id;
 
   ToggleDailyStatus(this.id);
