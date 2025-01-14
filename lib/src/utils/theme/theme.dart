@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:schedule/src/utils/constants/colors.dart';
 import 'package:schedule/src/utils/theme/custom_themes/app_bar_theme.dart';
+import 'package:schedule/src/utils/theme/custom_themes/bottom_navbar_theme.dart';
 import 'package:schedule/src/utils/theme/custom_themes/bottom_sheet_theme.dart';
 import 'package:schedule/src/utils/theme/custom_themes/checkbox_theme.dart';
 import 'package:schedule/src/utils/theme/custom_themes/chip_theme.dart';
@@ -27,6 +28,7 @@ class ScheduleTheme{
     outlinedButtonTheme: ScheduleOutlinedButtonTheme.lightOutlinedButtonTheme,
     elevatedButtonTheme: ScheduleElevatedButtonTheme.lightElevatedButtonTheme,
     inputDecorationTheme: ScheduleTextFormFieldTheme.lightTextFormFieldTheme,
+    bottomNavigationBarTheme: ScheduleBottomNavbarTheme.lightBottomNavbarTheme,
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -44,5 +46,6 @@ class ScheduleTheme{
     elevatedButtonTheme: ScheduleElevatedButtonTheme.darkElevatedButtonTheme,
     textButtonTheme: ScheduleTextButtonTheme.darkTextButtonTheme,
     inputDecorationTheme: ScheduleTextFormFieldTheme.darkTextFormFieldTheme,
+    bottomNavigationBarTheme: ScheduleBottomNavbarTheme.darkBottomNavbarTheme,
   );
 }

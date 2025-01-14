@@ -16,9 +16,9 @@ class ScheduleSizes {
   static const double appBarHeight = 105.0;
 
 // Default space between sections
-  static const double defaultSpace = 12;
+  static const double defaultSpace = 14;
   static const double spaceBetweenItems = 6;
-  static const double spaceBetweenSections = 18;
+  static const double spaceBetweenSections = 24;
 
 //Border radius
 

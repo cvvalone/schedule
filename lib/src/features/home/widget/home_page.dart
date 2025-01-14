@@ -1,15 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule/src/features/app/bloc/app_bloc.dart';
+import 'package:schedule/src/features/home/widget/home_screen.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   static Page<void> page() => const MaterialPage<void>(child: HomePage());
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  PageController _pageController = PageController();
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+      _pageController.animateToPage(
+        index,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.linear,
+      );
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+
     final user = context.select((AppBloc bloc) => bloc.state.user);
     final String? photo = user.photo;
     return Scaffold(
@@ -25,27 +45,49 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: Align(
-        alignment: const Alignment(0, -1 / 3),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            CircleAvatar(
-              radius: 48,
-              backgroundImage: photo != null ? NetworkImage(photo) : null,
-              child: photo == null
-                  ? const Icon(
-                      Icons.person_outline,
-                      size: 48,
-                    )
-                  : null,
-            ),
-            const SizedBox(height: 4),
-            Text(user.email ?? '', style: textTheme.titleLarge),
-            const SizedBox(height: 4),
-            Text(user.name ?? '', style: textTheme.headlineSmall),
-          ],
-        ),
+      body: PageView(
+        onPageChanged: (value){
+          setState(() {
+            _selectedIndex = value;
+          });
+        },
+        controller: _pageController,
+        children: [
+          HomeScreen(photo: photo, user: user,),
+          Scaffold(
+            body: Text("second"),
+          ),
+          Scaffold(
+            body: Text("third"),
+          ),
+          Scaffold(
+            body: Text("fourth"),
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        onTap: _onItemTapped,
+        currentIndex: _selectedIndex,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.today),
+            label: 'Сьогодні',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.view_week),
+            label: 'Розклад',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.assignment),
+            label: 'Плани',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            tooltip: 'Налаштування',
+            label: 'Налаштування',
+          )
+        ],
       ),
     );
   }
