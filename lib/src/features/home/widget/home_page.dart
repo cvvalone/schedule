@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
     final String? photo = user.photo;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: const Text('VTFC'),
         actions: <Widget>[
           IconButton(
             key: const Key('homePage_logout_iconButton'),
@@ -58,12 +58,12 @@ class _HomePageState extends State<HomePage> {
             photo: photo,
             user: user,
           ),
+          Scaffold(
+            body: Text("Second"),
+          ),
           BlocProvider(
             create: (context) => DailyBloc(),
             child: DailyScreen(),
-          ),
-          Scaffold(
-            body: Text("third"),
           ),
           Scaffold(
             body: Text("fourth"),
