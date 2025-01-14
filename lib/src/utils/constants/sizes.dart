@@ -18,7 +18,7 @@ class ScheduleSizes {
 // Default space between sections
   static const double defaultSpace = 14;
   static const double spaceBetweenItems = 6;
-  static const double spaceBetweenSections = 24;
+  static const double spaceBetweenSections = 30;
 
 //Border radius
 

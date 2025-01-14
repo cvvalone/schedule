@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:schedule/src/features/authentication/signup/cubit/signup_cubit.dart';
+import 'package:schedule/src/utils/constants/images.dart';
+import 'package:schedule/src/utils/constants/sizes.dart';
 
 class SignUpForm extends StatelessWidget {
   const SignUpForm({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return BlocListener<SignUpCubit, SignUpState>(
       listener: (context, state) {
         if (state.status.isSuccess) {
@@ -16,7 +19,7 @@ class SignUpForm extends StatelessWidget {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              SnackBar(content: Text(state.errorMessage ?? 'Sign Up Failure')),
+              SnackBar(content: Text(state.errorMessage ?? 'Помилка реєстрації')),
             );
         }
       },
@@ -25,12 +28,19 @@ class SignUpForm extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            CircleAvatar(
+                radius: 48,
+                backgroundImage: theme.brightness == Brightness.dark
+                    ? AssetImage(ScheduleImages.darkAppLogo)
+                    : AssetImage(ScheduleImages.lightAppLogo),
+              ),
+            const SizedBox(height: ScheduleSizes.spaceBetweenSections,),
             _EmailInput(),
-            const SizedBox(height: 8),
+            const SizedBox(height: ScheduleSizes.spaceBetweenItems),
             _PasswordInput(),
-            const SizedBox(height: 8),
+            const SizedBox(height: ScheduleSizes.spaceBetweenItems),
             _ConfirmPasswordInput(),
-            const SizedBox(height: 8),
+            const SizedBox(height: ScheduleSizes.spaceBetweenSections),
             _SignUpButton(),
           ],
         ),
@@ -51,9 +61,9 @@ class _EmailInput extends StatelessWidget {
       onChanged: (email) => context.read<SignUpCubit>().emailChanged(email),
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
-        labelText: 'email',
+        labelText: 'Пошта',
         helperText: '',
-        errorText: displayError != null ? 'invalid email' : null,
+        errorText: displayError != null ? 'Некоректна пошта' : null,
       ),
     );
   }
@@ -72,9 +82,9 @@ class _PasswordInput extends StatelessWidget {
           context.read<SignUpCubit>().passwordChanged(password),
       obscureText: true,
       decoration: InputDecoration(
-        labelText: 'password',
+        labelText: 'Пароль',
         helperText: '',
-        errorText: displayError != null ? 'invalid password' : null,
+        errorText: displayError != null ? 'Некоректний пароль' : null,
       ),
     );
   }
@@ -93,7 +103,7 @@ class _ConfirmPasswordInput extends StatelessWidget {
           context.read<SignUpCubit>().confirmedPasswordChanged(confirmPassword),
       obscureText: true,
       decoration: InputDecoration(
-        labelText: 'confirm password',
+        labelText: 'Підтвердіть пароль',
         helperText: '',
         errorText: displayError != null ? 'passwords do not match' : null,
       ),
@@ -116,12 +126,6 @@ class _SignUpButton extends StatelessWidget {
 
     return ElevatedButton(
       key: const Key('signUpForm_continue_raisedButton'),
-      style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
-        backgroundColor: Colors.orangeAccent,
-      ),
       onPressed: isValid
           ? () => context.read<SignUpCubit>().signUpFormSubmitted()
           : null,
