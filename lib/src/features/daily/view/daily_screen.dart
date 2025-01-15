@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule/src/features/daily/bloc/daily_bloc.dart';
 import 'package:schedule/src/utils/constants/sizes.dart';
+import 'package:schedule/src/utils/formatters/date_helper.dart';
 
 class DailyScreen extends StatefulWidget {
   const DailyScreen({super.key});
@@ -12,17 +13,26 @@ class DailyScreen extends StatefulWidget {
 
 class _DailyScreenState extends State<DailyScreen> {
   TextEditingController _dailyController = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
+  TextEditingController _dateController = TextEditingController();
+  DateTime? _pickedDate;
 
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<DailyBloc>();
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        title: Text('Плани'),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: BlocBuilder<DailyBloc, DailyState>(
           builder: (context, state) {
-            if(state is DailyLoading){
-              return Center(child: CircularProgressIndicator(),);
+            if (state is DailyLoading) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
             }
             if (state is DailyLoaded) {
               return ListView.builder(
@@ -30,27 +40,43 @@ class _DailyScreenState extends State<DailyScreen> {
                 itemBuilder: (context, index) {
                   final task = state.tasks[index];
                   return ListTile(
-                    title: Text(task.title),
-                    trailing: IconButton(
-                      icon: Icon(task.isCompleted
-                          ? Icons.check_box
-                          : Icons.check_box_outline_blank),
-                      onPressed: () => bloc.add(ToggleDailyStatus(task.id)),
+                    title: Text(
+                      task.title,
+                      style: TextStyle(
+                          decoration: task.isCompleted
+                              ? TextDecoration.lineThrough
+                              : null),
                     ),
+                    subtitle: Text(
+                      task.description.length > 30
+                          ? task.description.substring(0, 30) + '...'
+                          : task.description,
+                      style: TextStyle(
+                          decoration: task.isCompleted
+                              ? TextDecoration.lineThrough
+                              : null),
+                    ),
+                    leading: Checkbox(
+                        value: task.isCompleted,
+                        onChanged: (_) {
+                          setState(() {
+                            bloc.add(ToggleDailyStatus(task.id));
+                          });
+                        }),
                     onLongPress: () {
                       bloc.add(DeleteDailyTask(task.id));
                     },
                   );
                 },
               );
-            }else{
-            return Center(child: Text('Цілей поки немає.'));
+            } else {
+              return Center(child: Text('Цілей поки немає.'));
             }
           },
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
+        onPressed: () {
           _showAddTaskDialog(context, bloc);
         },
         child: Icon(Icons.add),
@@ -75,16 +101,46 @@ class _DailyScreenState extends State<DailyScreen> {
               TextField(
                 controller: _dailyController,
                 decoration: InputDecoration(
-                  labelText: 'Введіть нову ціль',
+                  labelText: 'Введіть заголовок цілі',
                 ),
+              ),
+              SizedBox(height: ScheduleSizes.spaceBetweenItems),
+              TextField(
+                controller: _descriptionController,
+                decoration: InputDecoration(
+                  labelText: 'Введіть опис цілі',
+                ),
+              ),
+              SizedBox(height: ScheduleSizes.spaceBetweenItems),
+              TextField(
+                controller: _dateController,
+                decoration: InputDecoration(
+                  labelText: 'Оберіть дату',
+                  suffixIcon: Icon(Icons.calendar_today),
+                ),
+                onTap: () async {
+                  _pickedDate = await _selectDate();
+                  if (_pickedDate != null) {
+                    _dateController.text = DateHelper.formatDate(_pickedDate!);
+                  }
+                },
               ),
               SizedBox(height: ScheduleSizes.spaceBetweenItems),
               ElevatedButton(
                 onPressed: () {
                   final taskTitle = _dailyController.text.trim();
-                  if(taskTitle.isNotEmpty){
-                    bloc.add(AddDailyTask(_dailyController.text));
+                  final taskDescription = _descriptionController.text.trim();
+                  if (taskTitle.isNotEmpty &&
+                      taskDescription.isNotEmpty &&
+                      _pickedDate != null) {
+                    bloc.add(AddDailyTask(
+                      taskTitle,
+                      taskDescription,
+                      _pickedDate!,
+                    ));
                     _dailyController.clear();
+                    _descriptionController.clear();
+                    _dateController.clear();
                     Navigator.pop(context);
                   }
                 },
@@ -95,6 +151,19 @@ class _DailyScreenState extends State<DailyScreen> {
         );
       },
     );
+  }
+
+  Future<DateTime?> _selectDate() async {
+    DateTime currentDate = DateTime.now();
+    DateTime? selectedDate = await showDatePicker(
+        context: context,
+        initialDate: currentDate,
+        firstDate: currentDate,
+        lastDate: DateTime(2100));
+    if (selectedDate != null) {
+      return selectedDate;
+    }
+    return null;
   }
 
   @override

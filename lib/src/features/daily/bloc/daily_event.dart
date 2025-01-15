@@ -8,8 +8,10 @@ class LoadDailyTask extends DailyEvent {}
 
 class AddDailyTask extends DailyEvent {
   final String title;
+  final String description;
+  final DateTime date;
 
-  AddDailyTask(this.title);
+  AddDailyTask(this.title, this.description, this.date);
 }
 
 class DeleteDailyTask extends DailyEvent {

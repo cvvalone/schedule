@@ -5,7 +5,8 @@ import 'package:schedule/src/data/repos/daily_task/model/daily_task.dart';
 import 'package:schedule/src/features/app/bloc/app_bloc.dart';
 import 'package:schedule/src/features/daily/bloc/daily_bloc.dart';
 import 'package:schedule/src/features/daily/view/daily_screen.dart';
-import 'package:schedule/src/features/home/widget/home_screen.dart';
+import 'package:schedule/src/features/schedule/view/schedule_screen.dart';
+import 'package:schedule/src/features/today/view/today_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -34,20 +35,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final user = context.select((AppBloc bloc) => bloc.state.user);
-    final String? photo = user.photo;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('VTFC'),
-        actions: <Widget>[
-          IconButton(
-            key: const Key('homePage_logout_iconButton'),
-            icon: const Icon(Icons.exit_to_app),
-            onPressed: () {
-              context.read<AppBloc>().add(const AppLogoutPressed());
-            },
-          ),
-        ],
-      ),
       body: PageView(
         onPageChanged: (value) {
           setState(() {
@@ -56,13 +44,8 @@ class _HomePageState extends State<HomePage> {
         },
         controller: _pageController,
         children: [
-          HomeScreen(
-            photo: photo,
-            user: user,
-          ),
-          Scaffold(
-            body: Text("Second"),
-          ),
+          TodayScreen(),
+          ScheduleMainScreen(),
           BlocProvider(
             create: (context) {
               final taskBox = Hive.box<DailyTask>('tasks');
@@ -71,7 +54,13 @@ class _HomePageState extends State<HomePage> {
             child: DailyScreen(),
           ),
           Scaffold(
-            body: Text("fourth"),
+            body: Center(
+              child: ElevatedButton(
+                  onPressed: () {
+                    context.read<AppBloc>().add(const AppLogoutPressed());
+                  },
+                  child: Text('Logout')),
+            ),
           ),
         ],
       ),
