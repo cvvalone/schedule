@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:hive/hive.dart';
 import 'package:schedule/src/data/repos/daily_task/model/daily_task.dart';
 
@@ -23,7 +22,7 @@ class DailyBloc extends Bloc<DailyEvent, DailyState> {
 
   void _onAddDailyTask(AddDailyTask event, Emitter<DailyState> emit) async {
     final newTask = DailyTask(title: event.title, id: DateTime.now().toString());
-    await taskBox.add(newTask);
+    await taskBox.put(newTask.id, newTask);
     add(LoadDailyTask());
   }
 
