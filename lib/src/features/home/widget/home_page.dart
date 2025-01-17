@@ -1,7 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:schedule/src/data/repos/daily_task/model/daily_task.dart';
 import 'package:schedule/src/features/app/bloc/app_bloc.dart';
 import 'package:schedule/src/features/daily/bloc/daily_bloc.dart';
 import 'package:schedule/src/features/daily/view/daily_screen.dart';
@@ -48,8 +47,8 @@ class _HomePageState extends State<HomePage> {
           ScheduleMainScreen(),
           BlocProvider(
             create: (context) {
-              final taskBox = Hive.box<DailyTask>('tasks');
-              return DailyBloc(taskBox)..add(LoadDailyTask());
+              final FirebaseFirestore firestore = FirebaseFirestore.instance;
+              return DailyBloc(firestore: firestore)..add(LoadDailyTask(user.id));
             },
             child: DailyScreen(),
           ),

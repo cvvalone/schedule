@@ -1,14 +1,17 @@
 import 'package:bloc/bloc.dart';
-import 'package:hive/hive.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:schedule/src/data/repos/daily_task/model/daily_task.dart';
 
 part 'daily_event.dart';
 part 'daily_state.dart';
 
 class DailyBloc extends Bloc<DailyEvent, DailyState> {
-  final Box<DailyTask> taskBox;
+  final FirebaseFirestore _firestore;
 
-  DailyBloc(this.taskBox) : super(DailyLoading()) {
+  DailyBloc({required FirebaseFirestore firestore})
+      : _firestore = firestore,
+        super(DailyLoading()) {
     on<LoadDailyTask>(_onLoadDailyTask);
     on<AddDailyTask>(_onAddDailyTask);
     on<ToggleDailyStatus>(_onToggleDailyStatus);
@@ -17,34 +20,73 @@ class DailyBloc extends Bloc<DailyEvent, DailyState> {
 
   Future<void> _onLoadDailyTask(
       LoadDailyTask event, Emitter<DailyState> emit) async {
-    final tasks = taskBox.values.toList();
-    emit(DailyLoaded(tasks));
+    try {
+      final snapshot = await _firestore
+          .collection('users')
+          .doc(event.userId)
+          .collection('dailyTasks')
+          .get();
+      final tasks = snapshot.docs.map((doc) {
+        return DailyTask.fromJson(doc.data() as Map<String, Object>)
+            .copyWith(id: doc.id);
+      }).toList(growable: false);
+
+      emit(DailyLoaded(tasks));
+    } catch (e) {}
   }
 
   void _onAddDailyTask(AddDailyTask event, Emitter<DailyState> emit) async {
     final newTask = DailyTask(
-      title: event.title,
-      description: event.description,
-      date: event.date,
-      id: DateTime.now().toString(),
-    );
-    await taskBox.put(newTask.id, newTask);
-    add(LoadDailyTask());
+        title: event.title, description: event.description, date: event.date);
+
+    await _firestore
+        .collection('users')
+        .doc(event.userId)
+        .collection('dailyTasks')
+        .add(newTask.toJson());
+
+    add(LoadDailyTask(event.userId));
   }
 
   Future<void> _onToggleDailyStatus(
       ToggleDailyStatus event, Emitter<DailyState> emit) async {
-    final task = taskBox.get(event.id);
-    if (task != null) {
+    final _currentState = state;
+    if (_currentState is DailyLoaded) {
+      final task = _currentState.tasks.firstWhere((task) => task.id == event.id,
+          orElse: () => throw Exception('Task with id: ${event.id} not found'));
+
       final updatedTask = task.copyWith(isCompleted: !task.isCompleted);
-      await taskBox.put(event.id, updatedTask);
-      add(LoadDailyTask());
+      try {
+        await _firestore
+            .collection('users')
+            .doc(event.userId)
+            .collection('dailyTasks')
+            .doc(updatedTask.id)
+            .update({'isCompleted': updatedTask.isCompleted});
+      } catch (e) {
+        DailyError('Failed to update tasks: ${e.toString}');
+      }
+      add(LoadDailyTask(event.userId));
     }
   }
 
   Future<void> _onDeleteDailyTask(
       DeleteDailyTask event, Emitter<DailyState> emit) async {
-    await taskBox.delete(event.id);
-    add(LoadDailyTask());
+    final _currentState = state;
+    if (_currentState is DailyLoaded) {
+      final task = _currentState.tasks.firstWhere((task) => task.id == event.id,
+          orElse: () => throw Exception('Task with id: ${event.id} not found'));
+      try {
+        await _firestore
+            .collection('users')
+            .doc(event.userId)
+            .collection('dailyTasks')
+            .doc(task.id)
+            .delete();
+        add(LoadDailyTask(event.userId));
+      } catch (e) {
+        DailyError('Failed to delete task: ${e.toString()}');
+      }
+    }
   }
 }

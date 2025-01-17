@@ -1,45 +1,37 @@
 {
   "project_info": {
-    "project_number": "909820019815",
-    "project_id": "schedule-b6d27",
-    "storage_bucket": "schedule-b6d27.firebasestorage.app"
+    "project_number": "437806188494",
+    "project_id": "userapplication-acaec",
+    "storage_bucket": "userapplication-acaec.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:909820019815:android:1b43f2ae729c6ee24040c2",
+        "mobilesdk_app_id": "1:437806188494:android:bea8ad92c7ba3351224d9f",
         "android_client_info": {
           "package_name": "com.example.schedule"
         }
       },
       "oauth_client": [
         {
-          "client_id": "909820019815-t5u2nh8clnjh1mstcrb5j3nve2585523.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.schedule",
-            "certificate_hash": "d94fe7685b9b5bda2ae90c862b73b9dafeae9a5b"
-          }
-        },
-        {
-          "client_id": "909820019815-m07a6rssdi191rfq55rj64qctgvc21mr.apps.googleusercontent.com",
+          "client_id": "437806188494-btr8kt97sqjnrj8jnr207cr12fjnohgi.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBvox0YGlIlxEF9TMJwZ-V3yIOVgGqPuRk"
+          "current_key": "AIzaSyCR5ycyeUWy7XQOAv00wfMyxOrtgGt-t5Y"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "909820019815-m07a6rssdi191rfq55rj64qctgvc21mr.apps.googleusercontent.com",
+              "client_id": "437806188494-btr8kt97sqjnrj8jnr207cr12fjnohgi.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "909820019815-c73sttv8o43jc2bifug8h0sclliedta2.apps.googleusercontent.com",
+              "client_id": "437806188494-mjo0335bdjg8hrie5v9n1babi3nrn624.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.example.schedule"

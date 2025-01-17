@@ -25,7 +25,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         return windows;
       case TargetPlatform.linux:
@@ -41,48 +44,37 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDqM93Q6mQe8CgsvCXqpwvPYhZ2JGR-vUM',
-    appId: '1:909820019815:web:a63272e97d5e61ce4040c2',
-    messagingSenderId: '909820019815',
-    projectId: 'schedule-b6d27',
-    authDomain: 'schedule-b6d27.firebaseapp.com',
-    storageBucket: 'schedule-b6d27.firebasestorage.app',
+    apiKey: 'AIzaSyAK_QLz33uv7d0--JQAXNgFet3o0JbAdSU',
+    appId: '1:437806188494:web:5ce129fb9a0e29b9224d9f',
+    messagingSenderId: '437806188494',
+    projectId: 'userapplication-acaec',
+    authDomain: 'userapplication-acaec.firebaseapp.com',
+    storageBucket: 'userapplication-acaec.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBvox0YGlIlxEF9TMJwZ-V3yIOVgGqPuRk',
-    appId: '1:909820019815:android:1b43f2ae729c6ee24040c2',
-    messagingSenderId: '909820019815',
-    projectId: 'schedule-b6d27',
-    storageBucket: 'schedule-b6d27.firebasestorage.app',
+    apiKey: 'AIzaSyCR5ycyeUWy7XQOAv00wfMyxOrtgGt-t5Y',
+    appId: '1:437806188494:android:bea8ad92c7ba3351224d9f',
+    messagingSenderId: '437806188494',
+    projectId: 'userapplication-acaec',
+    storageBucket: 'userapplication-acaec.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCnPNVOn6quzZJNAFfTtT55hJ-lLpBUE9o',
-    appId: '1:909820019815:ios:367d494c0021027e4040c2',
-    messagingSenderId: '909820019815',
-    projectId: 'schedule-b6d27',
-    storageBucket: 'schedule-b6d27.firebasestorage.app',
-    iosClientId: '909820019815-c73sttv8o43jc2bifug8h0sclliedta2.apps.googleusercontent.com',
-    iosBundleId: 'com.example.schedule',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCnPNVOn6quzZJNAFfTtT55hJ-lLpBUE9o',
-    appId: '1:909820019815:ios:367d494c0021027e4040c2',
-    messagingSenderId: '909820019815',
-    projectId: 'schedule-b6d27',
-    storageBucket: 'schedule-b6d27.firebasestorage.app',
-    iosClientId: '909820019815-c73sttv8o43jc2bifug8h0sclliedta2.apps.googleusercontent.com',
+    apiKey: 'AIzaSyBdL_oRGkfKGR34cn8Z0Z0h9TzKL1dvKCM',
+    appId: '1:437806188494:ios:82d724e2cc81492d224d9f',
+    messagingSenderId: '437806188494',
+    projectId: 'userapplication-acaec',
+    storageBucket: 'userapplication-acaec.firebasestorage.app',
     iosBundleId: 'com.example.schedule',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyDqM93Q6mQe8CgsvCXqpwvPYhZ2JGR-vUM',
-    appId: '1:909820019815:web:1e8a9bae08a610734040c2',
-    messagingSenderId: '909820019815',
-    projectId: 'schedule-b6d27',
-    authDomain: 'schedule-b6d27.firebaseapp.com',
-    storageBucket: 'schedule-b6d27.firebasestorage.app',
+    apiKey: 'AIzaSyAK_QLz33uv7d0--JQAXNgFet3o0JbAdSU',
+    appId: '1:437806188494:web:e8787e66093ee99f224d9f',
+    messagingSenderId: '437806188494',
+    projectId: 'userapplication-acaec',
+    authDomain: 'userapplication-acaec.firebaseapp.com',
+    storageBucket: 'userapplication-acaec.firebasestorage.app',
   );
 }

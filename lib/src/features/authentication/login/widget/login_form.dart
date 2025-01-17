@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:formz/formz.dart';
 import 'package:schedule/src/features/authentication/login/cubit/login_cubit.dart';
 import 'package:schedule/src/features/authentication/signup/widget/signup_screen.dart';
-import 'package:schedule/src/utils/constants/colors.dart';
 import 'package:schedule/src/utils/constants/images.dart';
 import 'package:schedule/src/utils/constants/sizes.dart';
 

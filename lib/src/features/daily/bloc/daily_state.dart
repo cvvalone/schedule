@@ -10,4 +10,8 @@ class DailyLoaded extends DailyState {
   DailyLoaded(this.tasks);
 }
 
-class DailyError extends DailyState {}
+class DailyError extends DailyState {
+  final String error;
+
+  DailyError(this.error);
+}

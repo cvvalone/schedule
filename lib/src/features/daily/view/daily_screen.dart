@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:schedule/src/features/app/bloc/app_bloc.dart';
 import 'package:schedule/src/features/daily/bloc/daily_bloc.dart';
 import 'package:schedule/src/utils/constants/sizes.dart';
 import 'package:schedule/src/utils/formatters/date_helper.dart';
@@ -19,6 +20,7 @@ class _DailyScreenState extends State<DailyScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final user = context.select((AppBloc bloc) => bloc.state.user);
     final bloc = context.read<DailyBloc>();
     return Scaffold(
       appBar: AppBar(
@@ -60,11 +62,15 @@ class _DailyScreenState extends State<DailyScreen> {
                         value: task.isCompleted,
                         onChanged: (_) {
                           setState(() {
-                            bloc.add(ToggleDailyStatus(task.id));
+                            if (task.id != null) {
+                              bloc.add(ToggleDailyStatus(user.id, task.id!));
+                            }
                           });
                         }),
                     onLongPress: () {
-                      bloc.add(DeleteDailyTask(task.id));
+                      if (task.id != null) {
+                        bloc.add(DeleteDailyTask(user.id, task.id!));
+                      }
                     },
                   );
                 },
@@ -85,6 +91,7 @@ class _DailyScreenState extends State<DailyScreen> {
   }
 
   void _showAddTaskDialog(BuildContext context, DailyBloc bloc) {
+    final user = context.select((AppBloc bloc) => bloc.state.user);
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -134,6 +141,7 @@ class _DailyScreenState extends State<DailyScreen> {
                       taskDescription.isNotEmpty &&
                       _pickedDate != null) {
                     bloc.add(AddDailyTask(
+                      user.id,
                       taskTitle,
                       taskDescription,
                       _pickedDate!,

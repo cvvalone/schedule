@@ -3,51 +3,23 @@
 part of 'daily_task.dart';
 
 // **************************************************************************
-// TypeAdapterGenerator
+// JsonSerializableGenerator
 // **************************************************************************
 
-class DailyTaskAdapter extends TypeAdapter<DailyTask> {
-  @override
-  final int typeId = 0;
-
-  @override
-  DailyTask read(BinaryReader reader) {
-    final numOfFields = reader.readByte();
-    final fields = <int, dynamic>{
-      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
-    };
-    return DailyTask(
-      title: fields[0] as String,
-      description: fields[1] as String,
-      id: fields[2] as String,
-      date: fields[3] as DateTime,
-      isCompleted: fields[4] as bool,
+_$DailyTaskImpl _$$DailyTaskImplFromJson(Map<String, dynamic> json) =>
+    _$DailyTaskImpl(
+      title: json['title'] as String,
+      description: json['description'] as String,
+      id: json['id'] as String?,
+      date: DateTime.parse(json['date'] as String),
+      isCompleted: json['isCompleted'] ?? false,
     );
-  }
 
-  @override
-  void write(BinaryWriter writer, DailyTask obj) {
-    writer
-      ..writeByte(5)
-      ..writeByte(0)
-      ..write(obj.title)
-      ..writeByte(1)
-      ..write(obj.description)
-      ..writeByte(2)
-      ..write(obj.id)
-      ..writeByte(3)
-      ..write(obj.date)
-      ..writeByte(4)
-      ..write(obj.isCompleted);
-  }
-
-  @override
-  int get hashCode => typeId.hashCode;
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is DailyTaskAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
-}
+Map<String, dynamic> _$$DailyTaskImplToJson(_$DailyTaskImpl instance) =>
+    <String, dynamic>{
+      'title': instance.title,
+      'description': instance.description,
+      'id': instance.id,
+      'date': instance.date.toIso8601String(),
+      'isCompleted': instance.isCompleted,
+    };
