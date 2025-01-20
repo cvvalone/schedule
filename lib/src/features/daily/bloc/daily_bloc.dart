@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:schedule/src/data/repos/daily_task/model/daily_task.dart';
 
 part 'daily_event.dart';
@@ -27,12 +27,15 @@ class DailyBloc extends Bloc<DailyEvent, DailyState> {
           .collection('dailyTasks')
           .get();
       final tasks = snapshot.docs.map((doc) {
-        return DailyTask.fromJson(doc.data() as Map<String, Object>)
+        return DailyTask.fromJson(doc.data())
             .copyWith(id: doc.id);
       }).toList(growable: false);
 
       emit(DailyLoaded(tasks));
-    } catch (e) {}
+    } on FirebaseException catch (e) {
+      emit(DailyError('FirebaseException: ${e.message}'));
+      debugPrint('FirebaseException: ${e.message}');
+    }
   }
 
   void _onAddDailyTask(AddDailyTask event, Emitter<DailyState> emit) async {

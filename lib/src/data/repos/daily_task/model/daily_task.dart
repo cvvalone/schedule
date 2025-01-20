@@ -13,5 +13,5 @@ class DailyTask with _$DailyTask {
     @Default(false) isCompleted,
   }) = _DailyTask;
 
-  factory DailyTask.fromJson(Map<String, Object> json) => _$DailyTaskFromJson(json);
+  factory DailyTask.fromJson(Map<String, dynamic> json) => _$DailyTaskFromJson(json);
 }

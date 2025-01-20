@@ -1,3 +1,4 @@
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule/src/features/app/bloc/app_bloc.dart';
@@ -47,7 +48,8 @@ class _DailyScreenState extends State<DailyScreen> {
                       style: TextStyle(
                           decoration: task.isCompleted
                               ? TextDecoration.lineThrough
-                              : null),
+                              : null,
+                            fontSize: ScheduleSizes.fontSizeLg),
                     ),
                     subtitle: Text(
                       task.description.length > 30
@@ -83,15 +85,14 @@ class _DailyScreenState extends State<DailyScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _showAddTaskDialog(context, bloc);
+          _showAddTaskDialog(context, bloc, user);
         },
         child: Icon(Icons.add),
       ),
     );
   }
 
-  void _showAddTaskDialog(BuildContext context, DailyBloc bloc) {
-    final user = context.select((AppBloc bloc) => bloc.state.user);
+  void _showAddTaskDialog(BuildContext context, DailyBloc bloc, User user) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
