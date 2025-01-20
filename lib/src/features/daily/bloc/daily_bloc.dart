@@ -1,17 +1,16 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:schedule/src/data/repos/daily_task/daily_repository.dart';
 import 'package:schedule/src/data/repos/daily_task/model/daily_task.dart';
 
 part 'daily_event.dart';
 part 'daily_state.dart';
 
 class DailyBloc extends Bloc<DailyEvent, DailyState> {
-  final FirebaseFirestore _firestore;
+  final DailyRepository repository;
 
-  DailyBloc({required FirebaseFirestore firestore})
-      : _firestore = firestore,
-        super(DailyLoading()) {
+  DailyBloc({required this.repository}) : super(DailyLoading()) {
     on<LoadDailyTask>(_onLoadDailyTask);
     on<AddDailyTask>(_onAddDailyTask);
     on<ToggleDailyStatus>(_onToggleDailyStatus);
@@ -21,16 +20,7 @@ class DailyBloc extends Bloc<DailyEvent, DailyState> {
   Future<void> _onLoadDailyTask(
       LoadDailyTask event, Emitter<DailyState> emit) async {
     try {
-      final snapshot = await _firestore
-          .collection('users')
-          .doc(event.userId)
-          .collection('dailyTasks')
-          .get();
-      final tasks = snapshot.docs.map((doc) {
-        return DailyTask.fromJson(doc.data())
-            .copyWith(id: doc.id);
-      }).toList(growable: false);
-
+      final tasks = await repository.loadDailyTask(event);
       emit(DailyLoaded(tasks));
     } on FirebaseException catch (e) {
       emit(DailyError('FirebaseException: ${e.message}'));
@@ -41,13 +31,7 @@ class DailyBloc extends Bloc<DailyEvent, DailyState> {
   void _onAddDailyTask(AddDailyTask event, Emitter<DailyState> emit) async {
     final newTask = DailyTask(
         title: event.title, description: event.description, date: event.date);
-
-    await _firestore
-        .collection('users')
-        .doc(event.userId)
-        .collection('dailyTasks')
-        .add(newTask.toJson());
-
+    await repository.addDailyTask(event, newTask);
     add(LoadDailyTask(event.userId));
   }
 
@@ -55,17 +39,15 @@ class DailyBloc extends Bloc<DailyEvent, DailyState> {
       ToggleDailyStatus event, Emitter<DailyState> emit) async {
     final _currentState = state;
     if (_currentState is DailyLoaded) {
-      final task = _currentState.tasks.firstWhere((task) => task.id == event.id,
-          orElse: () => throw Exception('Task with id: ${event.id} not found'));
-
-      final updatedTask = task.copyWith(isCompleted: !task.isCompleted);
       try {
-        await _firestore
-            .collection('users')
-            .doc(event.userId)
-            .collection('dailyTasks')
-            .doc(updatedTask.id)
-            .update({'isCompleted': updatedTask.isCompleted});
+        final task = _currentState.tasks.firstWhere(
+            (task) => task.id == event.id,
+            orElse: () =>
+                throw Exception('Task with id: ${event.id} not found'));
+
+        final updatedTask = task.copyWith(isCompleted: !task.isCompleted);
+
+        await repository.toggleDailyTask(event, updatedTask);
       } catch (e) {
         DailyError('Failed to update tasks: ${e.toString}');
       }
@@ -75,21 +57,19 @@ class DailyBloc extends Bloc<DailyEvent, DailyState> {
 
   Future<void> _onDeleteDailyTask(
       DeleteDailyTask event, Emitter<DailyState> emit) async {
-    final _currentState = state;
-    if (_currentState is DailyLoaded) {
-      final task = _currentState.tasks.firstWhere((task) => task.id == event.id,
-          orElse: () => throw Exception('Task with id: ${event.id} not found'));
-      try {
-        await _firestore
-            .collection('users')
-            .doc(event.userId)
-            .collection('dailyTasks')
-            .doc(task.id)
-            .delete();
-        add(LoadDailyTask(event.userId));
-      } catch (e) {
-        DailyError('Failed to delete task: ${e.toString()}');
+    try {
+      final _currentState = state;
+      if (_currentState is DailyLoaded) {
+        final task = _currentState.tasks.firstWhere(
+            (task) => task.id == event.id,
+            orElse: () =>
+                throw Exception('Task with id: ${event.id} not found'));
+        await repository.deleteDailyTask(event, task);
+        
       }
+    } catch (e) {
+      DailyError('Failed to delete task: ${e.toString()}');
     }
+    add(LoadDailyTask(event.userId));
   }
 }
