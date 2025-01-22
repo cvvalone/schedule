@@ -39,4 +39,11 @@ class DateHelper {
     final weekdayNames = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт'];
     return date == '${now.day} ${weekdayNames[now.weekday - 1]}';
   }
+
+  static bool isEvenWeek(DateTime date) {
+    final startOfYear = DateTime(date.year, 1, 1);
+    int dayOfYear = date.difference(startOfYear).inDays + 1;
+    int weekOfYear = ((dayOfYear - date.weekday + 10) / 7).floor();
+    return weekOfYear % 2 == 0;
+  }
 }

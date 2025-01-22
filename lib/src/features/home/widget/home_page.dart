@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule/src/data/repos/daily_task/daily_repository.dart';
+import 'package:schedule/src/data/repos/schedule/schedule_repository.dart';
 import 'package:schedule/src/features/app/bloc/app_bloc.dart';
 import 'package:schedule/src/features/daily/bloc/daily_bloc.dart';
 import 'package:schedule/src/features/daily/view/daily_screen.dart';
+import 'package:schedule/src/features/schedule/bloc/schedule_bloc.dart';
 import 'package:schedule/src/features/schedule/view/schedule_screen.dart';
 import 'package:schedule/src/features/today/view/today_screen.dart';
 
@@ -44,11 +46,20 @@ class _HomePageState extends State<HomePage> {
         controller: _pageController,
         children: [
           TodayScreen(),
-          ScheduleMainScreen(),
+          BlocProvider(
+            create: (context) {
+              final ScheduleRepository repository = ScheduleRepository();
+              // final bool isEven = DateHelper.isEvenWeek(DateTime.now());
+              return ScheduleBloc(repository: repository)
+                ..add(ScheduleEvent.loadSchedule());
+            },
+            child: ScheduleMainScreen(),
+          ),
           BlocProvider(
             create: (context) {
               final DailyRepository repository = DailyRepository();
-              return DailyBloc(repository: repository)..add(LoadDailyTask(user.id));
+              return DailyBloc(repository: repository)
+                ..add(LoadDailyTask(user.id));
             },
             child: DailyScreen(),
           ),

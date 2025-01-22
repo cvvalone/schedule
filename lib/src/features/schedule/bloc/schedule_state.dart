@@ -1,11 +1,19 @@
-import 'package:schedule/src/data/repos/schedule/model/schedule_day.dart';
+part of 'schedule_bloc.dart';
 
-abstract class ScheduleState {}
+@freezed
+class ScheduleState with _$ScheduleState {
+  ScheduleState._();
+  factory ScheduleState.idle({
+    required ScheduleWeek schedule,
+    String? message,
+  }) = _Initial;
+  factory ScheduleState.processing({
+    required ScheduleWeek schedule,
+    String? message,
+  }) = _Processing;
 
-class ScheduleLoading extends ScheduleState {}
-
-class ScheduleLoaded extends ScheduleState{
-  final List<Map<String, ScheduleDay>> schedule;
-
-  ScheduleLoaded(this.schedule);
+  bool get isIdle => maybeMap(
+        idle: (_) => true,
+        orElse: () => false,
+      );
 }

@@ -1,3 +1,7 @@
-abstract class ScheduleEvent {}
+part of 'schedule_bloc.dart';
 
-class InitEvent extends ScheduleEvent {}
+
+@freezed
+class ScheduleEvent with _$ScheduleEvent {
+  const factory ScheduleEvent.loadSchedule() = _loadSchedule;
+}
