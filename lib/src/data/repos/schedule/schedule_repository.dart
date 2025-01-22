@@ -208,7 +208,8 @@ class ScheduleRepository {
 
 
   Future<ScheduleWeek> getScheduleForWeek(bool isEven) async {
-    await Future.delayed(Duration(seconds: 3));
+    // await Future.delayed(Duration(seconds: 3));
+    // throw Exception('Can`t reach schedule');
     if(isEven){
       return schedule;
     }

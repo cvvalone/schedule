@@ -1,9 +1,13 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:formz/formz.dart';
 import 'package:schedule/src/features/authentication/login/cubit/login_cubit.dart';
 import 'package:schedule/src/features/authentication/signup/widget/signup_screen.dart';
+import 'package:schedule/src/utils/constants/colors.dart';
 import 'package:schedule/src/utils/constants/images.dart';
 import 'package:schedule/src/utils/constants/sizes.dart';
 
@@ -12,7 +16,6 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state.status.isFailure) {
@@ -25,45 +28,71 @@ class LoginForm extends StatelessWidget {
             );
         }
       },
-      child: Align(
-        alignment: const Alignment(0, -1 / 3),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CircleAvatar(
-                radius: 48,
-                backgroundImage: theme.brightness == Brightness.dark
-                    ? AssetImage(ScheduleImages.darkAppLogo)
-                    : AssetImage(ScheduleImages.lightAppLogo),
-              ),
-              const SizedBox(
-                height: ScheduleSizes.spaceBetweenSections * 2,
-              ),
-              _EmailInput(),
-              const SizedBox(height: ScheduleSizes.spaceBetweenItems),
-              _PasswordInput(),
-              const SizedBox(height: ScheduleSizes.spaceBetweenItems),
-              _LoginButton(),
-              const SizedBox(height: ScheduleSizes.spaceBetweenItems),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "або",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.grey[700],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: ScheduleSizes.spaceBetweenItems),
-              _GoogleLoginButton(),
-              const SizedBox(height: ScheduleSizes.spaceBetweenItems),
-              _SignUpButton(),
+      child: Container(
+        width: 300,
+        height: 300,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(ScheduleSizes.borderRadiusMd),
+          gradient: LinearGradient(
+            colors: [
+              ScheduleColors.fLoginGradientColor,
+              ScheduleColors.sLoginGradientColor,
             ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          backgroundBlendMode: BlendMode.overlay,
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(ScheduleSizes.borderRadiusMd),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(
+              sigmaX: 5, // Розмиття по горизонталі
+              sigmaY: 5, // Розмиття по вертикалі
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'Авторизація',
+                  style: TextStyle(
+                    color: ScheduleColors.wTextColor,
+                    fontFamily: 'Roboto',
+                    fontSize: 30,
+                    fontWeight: FontWeight.w500,
+                    height: 35 / 30,
+                    letterSpacing: 0,
+                  ),
+                ),
+                const SizedBox(
+                  height: ScheduleSizes.spaceBetweenSections,
+                ),
+                _EmailInput(),
+                const SizedBox(height: ScheduleSizes.spaceBetweenItemsIn),
+                _PasswordInput(),
+                const SizedBox(height: ScheduleSizes.spaceBetweenItemsIn),
+                _LoginButton(),
+                const SizedBox(height: ScheduleSizes.spaceBetweenItemsIn),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "або",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.grey[700],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: ScheduleSizes.spaceBetweenItemsIn),
+                _GoogleLoginButton(),
+              ],
+            ),
           ),
         ),
       ),
@@ -78,15 +107,22 @@ class _EmailInput extends StatelessWidget {
       (LoginCubit cubit) => cubit.state.email.displayError,
     );
 
-    return TextField(
-      key: const Key('loginForm_emailInput_textField'),
-      onChanged: (email) => context.read<LoginCubit>().emailChanged(email),
-      keyboardType: TextInputType.emailAddress,
-      decoration: InputDecoration(
-        labelText: 'Пошта',
-        helperText: '',
-        errorText: displayError != null ? 'Недійсна пошта спробуйте із @vtc.vn.ua' : null,
-        prefixIcon: Icon(Icons.email),
+    return SizedBox(
+      height: 30,
+      width: 258,
+      child: TextField(
+        key: const Key('loginForm_emailInput_textField'),
+        onChanged: (email) => context.read<LoginCubit>().emailChanged(email),
+        keyboardType: TextInputType.emailAddress,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+          labelText: 'Пошта',
+          helperText: '',
+          errorText: displayError != null
+              ? 'Недійсна пошта спробуйте із @vtc.vn.ua'
+              : null,
+          prefixIcon: Icon(Icons.email),
+        ),
       ),
     );
   }
@@ -134,13 +170,15 @@ class _PasswordInputState extends State<_PasswordInput> {
         helperText: '',
         errorText: displayError != null ? 'Недійсний пароль' : null,
         prefixIcon: Icon(Icons.lock),
-        suffixIcon: _isTextNotEmpty ? IconButton(
-            onPressed: () {
-              setState(() {
-                _isPasswordHidden = !_isPasswordHidden;
-              });
-            },
-            icon: Icon(Icons.visibility)) : null,
+        suffixIcon: _isTextNotEmpty
+            ? IconButton(
+                onPressed: () {
+                  setState(() {
+                    _isPasswordHidden = !_isPasswordHidden;
+                  });
+                },
+                icon: Icon(Icons.visibility))
+            : null,
       ),
     );
   }

@@ -6,7 +6,7 @@ class ScheduleState with _$ScheduleState {
   factory ScheduleState.idle({
     required ScheduleWeek schedule,
     String? message,
-  }) = _Initial;
+  }) = _Idle;
   factory ScheduleState.processing({
     required ScheduleWeek schedule,
     String? message,
@@ -16,4 +16,9 @@ class ScheduleState with _$ScheduleState {
         idle: (_) => true,
         orElse: () => false,
       );
+
+  bool get isLoaded => maybeMap(
+    idle: (state) => state.schedule.days.isNotEmpty,
+    orElse:() => false,
+  );
 }

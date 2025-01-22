@@ -40,19 +40,19 @@ mixin _$ScheduleState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) idle,
+    required TResult Function(_Idle value) idle,
     required TResult Function(_Processing value) processing,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? idle,
+    TResult? Function(_Idle value)? idle,
     TResult? Function(_Processing value)? processing,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? idle,
+    TResult Function(_Idle value)? idle,
     TResult Function(_Processing value)? processing,
     required TResult orElse(),
   }) =>
@@ -118,11 +118,11 @@ class _$ScheduleStateCopyWithImpl<$Res, $Val extends ScheduleState>
 }
 
 /// @nodoc
-abstract class _$$InitialImplCopyWith<$Res>
+abstract class _$$IdleImplCopyWith<$Res>
     implements $ScheduleStateCopyWith<$Res> {
-  factory _$$InitialImplCopyWith(
-          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
-      __$$InitialImplCopyWithImpl<$Res>;
+  factory _$$IdleImplCopyWith(
+          _$IdleImpl value, $Res Function(_$IdleImpl) then) =
+      __$$IdleImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({ScheduleWeek schedule, String? message});
@@ -132,11 +132,10 @@ abstract class _$$InitialImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$InitialImplCopyWithImpl<$Res>
-    extends _$ScheduleStateCopyWithImpl<$Res, _$InitialImpl>
-    implements _$$InitialImplCopyWith<$Res> {
-  __$$InitialImplCopyWithImpl(
-      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
+class __$$IdleImplCopyWithImpl<$Res>
+    extends _$ScheduleStateCopyWithImpl<$Res, _$IdleImpl>
+    implements _$$IdleImplCopyWith<$Res> {
+  __$$IdleImplCopyWithImpl(_$IdleImpl _value, $Res Function(_$IdleImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of ScheduleState
@@ -147,7 +146,7 @@ class __$$InitialImplCopyWithImpl<$Res>
     Object? schedule = null,
     Object? message = freezed,
   }) {
-    return _then(_$InitialImpl(
+    return _then(_$IdleImpl(
       schedule: null == schedule
           ? _value.schedule
           : schedule // ignore: cast_nullable_to_non_nullable
@@ -162,8 +161,8 @@ class __$$InitialImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$InitialImpl extends _Initial {
-  _$InitialImpl({required this.schedule, this.message}) : super._();
+class _$IdleImpl extends _Idle {
+  _$IdleImpl({required this.schedule, this.message}) : super._();
 
   @override
   final ScheduleWeek schedule;
@@ -179,7 +178,7 @@ class _$InitialImpl extends _Initial {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$InitialImpl &&
+            other is _$IdleImpl &&
             (identical(other.schedule, schedule) ||
                 other.schedule == schedule) &&
             (identical(other.message, message) || other.message == message));
@@ -193,8 +192,8 @@ class _$InitialImpl extends _Initial {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
-      __$$InitialImplCopyWithImpl<_$InitialImpl>(this, _$identity);
+  _$$IdleImplCopyWith<_$IdleImpl> get copyWith =>
+      __$$IdleImplCopyWithImpl<_$IdleImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -231,7 +230,7 @@ class _$InitialImpl extends _Initial {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) idle,
+    required TResult Function(_Idle value) idle,
     required TResult Function(_Processing value) processing,
   }) {
     return idle(this);
@@ -240,7 +239,7 @@ class _$InitialImpl extends _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? idle,
+    TResult? Function(_Idle value)? idle,
     TResult? Function(_Processing value)? processing,
   }) {
     return idle?.call(this);
@@ -249,7 +248,7 @@ class _$InitialImpl extends _Initial {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? idle,
+    TResult Function(_Idle value)? idle,
     TResult Function(_Processing value)? processing,
     required TResult orElse(),
   }) {
@@ -260,11 +259,10 @@ class _$InitialImpl extends _Initial {
   }
 }
 
-abstract class _Initial extends ScheduleState {
-  factory _Initial(
-      {required final ScheduleWeek schedule,
-      final String? message}) = _$InitialImpl;
-  _Initial._() : super._();
+abstract class _Idle extends ScheduleState {
+  factory _Idle({required final ScheduleWeek schedule, final String? message}) =
+      _$IdleImpl;
+  _Idle._() : super._();
 
   @override
   ScheduleWeek get schedule;
@@ -275,7 +273,7 @@ abstract class _Initial extends ScheduleState {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
+  _$$IdleImplCopyWith<_$IdleImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -393,7 +391,7 @@ class _$ProcessingImpl extends _Processing {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) idle,
+    required TResult Function(_Idle value) idle,
     required TResult Function(_Processing value) processing,
   }) {
     return processing(this);
@@ -402,7 +400,7 @@ class _$ProcessingImpl extends _Processing {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? idle,
+    TResult? Function(_Idle value)? idle,
     TResult? Function(_Processing value)? processing,
   }) {
     return processing?.call(this);
@@ -411,7 +409,7 @@ class _$ProcessingImpl extends _Processing {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? idle,
+    TResult Function(_Idle value)? idle,
     TResult Function(_Processing value)? processing,
     required TResult orElse(),
   }) {

@@ -8,8 +8,18 @@ class ScheduleColors{
   static const Color sBgColor = Color(0xFF141927);
   static const Color tBgColor = Color(0xFF21283F);
 
+  static const Color deepBlueColor = Color(0xFF2A61C6);
+  
+  
+  static const Color mainBgColor = Color(0xFF4297D7);
+  
+  static const Color fLoginGradientColor = Color.fromRGBO(36, 64, 111, 0.4);
+  static const Color sLoginGradientColor = Color.fromRGBO(69, 123, 213, 0.4);
+  
+
   // Text colors
   static const Color wTextColor = Color(0xFFFFFFFF);
+  static const Color wBTextColor = Color(0xFFD8E6FF);
   static const Color gTextColor = Color(0xFFEBEBF5);
   static const Color bTextColor = Color(0xFF010618);
 
