@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schedule/src/utils/constants/colors.dart';
 
 class ScheduleOutlinedButtonTheme{
   ScheduleOutlinedButtonTheme._();
@@ -7,12 +8,12 @@ class ScheduleOutlinedButtonTheme{
     style: OutlinedButton.styleFrom(
       foregroundColor: Colors.white,
       backgroundColor: Colors.transparent,
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
       disabledBackgroundColor: Colors.transparent,
       disabledForegroundColor: Colors.grey,
       // fixedSize: const Size(120, 40),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-      side: BorderSide(width: 1.5,color: Colors.blue,),
+      side: BorderSide(width: 1.5,color: ScheduleColors.glSucColor,),
       textStyle: TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.w700,
