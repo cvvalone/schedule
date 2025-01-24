@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:schedule/src/data/repos/authentication/models.dart';
 import 'package:schedule/src/data/repos/authentication/repository/authentication_repository.dart';
@@ -12,7 +11,7 @@ class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   AuthenticationBloc({
     UserEntity? userEntity,
-    required final IAuthenticationRepository repository,
+    required final AuthenticationRepository repository,
   })  : _repository = repository,
         super(
           userEntity?.when<AuthenticationState>(
@@ -31,16 +30,64 @@ class AuthenticationBloc
     );
   }
 
+  AuthenticationRepository _repository;
+
   Future<void> _onLogin(_LogInAuthenticationEvent event,
       Emitter<AuthenticationState> emit) async {
-    try {} on Object catch (e) {}
+    try {
+      emit(AuthenticationState.inProgress(user: state.user));
+
+      final newUser =
+          await _repository.login(login: event.login, password: event.password);
+
+      emit(AuthenticationState.success(user: newUser));
+    } on Object catch (e) {
+      emit(AuthenticationState.error(user: state.user, message: e.toString()));
+      rethrow;
+    } finally {
+      if (state.user.isAuthenticated) {
+        emit(AuthenticationState.authenticated(user: state.user));
+      } else {
+        emit(AuthenticationState.notAuthenticated());
+      }
+    }
   }
 
   Future<void> _onGoogleLogin(_LogInWithGoogleAuthenticationEvent event,
-      Emitter<AuthenticationState> emit) async {}
+      Emitter<AuthenticationState> emit) async {
+    try {
+      emit(AuthenticationState.inProgress(user: state.user));
+      final newUser = await _repository.logInWithGoogle();
+      emit(AuthenticationState.success(user: newUser));
+    } on Object catch (e) {
+      emit(AuthenticationState.error(user: state.user, message: e.toString()));
+      rethrow;
+    } finally {
+      if (state.user.isAuthenticated) {
+        emit(AuthenticationState.authenticated(user: state.user));
+      } else {
+        emit(AuthenticationState.notAuthenticated());
+      }
+    }
+  }
 
   Future<void> _onLogout(_LogOutAuthenticationEvent event,
-      Emitter<AuthenticationState> emit) async {}
-
-  IAuthenticationRepository _repository;
+      Emitter<AuthenticationState> emit) async {
+    try {
+      emit(AuthenticationState.inProgress(user: state.user));
+      _repository.logout();
+      emit(AuthenticationState.success(
+          user: const UserEntity.notAuthenticated()));
+    } on Object catch (e) {
+      emit(AuthenticationState.error(message: e.toString(), user: state.user));
+      rethrow;
+    } finally {
+      emit(
+        state.user.when(
+          authenticated: (user) => AuthenticationState.authenticated(user: user),
+          notAuthenticated: () => const AuthenticationState.notAuthenticated(),
+        ),
+      );
+    }
+  }
 }

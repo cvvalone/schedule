@@ -1,16 +1,15 @@
-import 'package:authentication_repository/authentication_repository.dart';
-import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:schedule/src/features/app/bloc/app_bloc.dart';
-import 'package:schedule/src/features/app/routes/routes.dart';
+import 'package:schedule/src/data/repos/authentication/repository/authentication_repository.dart';
+import 'package:schedule/src/features/authentication/authertication.dart';
+import 'package:schedule/src/features/home/home.dart';
 import 'package:schedule/src/utils/theme/theme.dart';
 
 class App extends StatelessWidget {
   const App({
-    required AuthenticationRepository authentificationRepository,
+    required AuthenticationRepository authenticationRepository,
     super.key,
-  }) : _authenticationRepository = authentificationRepository;
+  }) : _authenticationRepository = authenticationRepository;
 
   final AuthenticationRepository _authenticationRepository;
 
@@ -20,9 +19,9 @@ class App extends StatelessWidget {
       value: _authenticationRepository,
       child: BlocProvider(
         lazy: false,
-        create: (_) => AppBloc(
-          authenticationRepository: _authenticationRepository,
-        )..add(AppUserSubscriptionRequested()),
+        create: (_) => AuthenticationBloc(
+          repository: _authenticationRepository,
+        ),
         child: const AppScreen(),
       ),
     );
@@ -38,10 +37,22 @@ class AppScreen extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: ScheduleTheme.lightTheme,
       darkTheme: ScheduleTheme.darkTheme,
-      home: FlowBuilder<AppStatus>(
-        state: context.select((AppBloc bloc) => bloc.state.status),
-        onGeneratePages: onGenerateAppViewPages,
+      home: BlocListener<AuthenticationBloc, AuthenticationState>(
+        listener: (context, state) {
+          if (state.isAuthenticated) {
+            Navigator.pushReplacementNamed(context, '/home');
+          } else {
+            Navigator.pushReplacementNamed(context, '/login');
+          }
+        },
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
       ),
+      routes: {
+        '/home': (context) => HomePage(), // Головна сторінка
+        '/login': (context) => LoginScreen(), // Сторінка авторизації
+      },
     );
   }
 }

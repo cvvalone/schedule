@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule/src/data/repos/daily_task/daily_repository.dart';
 import 'package:schedule/src/data/repos/schedule/schedule_repository.dart';
-import 'package:schedule/src/features/app/bloc/app_bloc.dart';
+import 'package:schedule/src/features/authentication/bloc/authentication_bloc.dart';
 import 'package:schedule/src/features/daily/bloc/daily_bloc.dart';
 import 'package:schedule/src/features/daily/view/daily_screen.dart';
 import 'package:schedule/src/features/schedule/bloc/schedule_bloc.dart';
@@ -35,7 +35,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final user = context.select((AppBloc bloc) => bloc.state.user);
     return Scaffold(
       body: PageView(
         onPageChanged: (value) {
@@ -58,8 +57,8 @@ class _HomePageState extends State<HomePage> {
           BlocProvider(
             create: (context) {
               final DailyRepository repository = DailyRepository();
-              return DailyBloc(repository: repository)
-                ..add(LoadDailyTask(user.id));
+              return DailyBloc(repository: repository);
+                // ..add(LoadDailyTask(user.id));
             },
             child: DailyScreen(),
           ),
@@ -67,7 +66,7 @@ class _HomePageState extends State<HomePage> {
             body: Center(
               child: ElevatedButton(
                   onPressed: () {
-                    context.read<AppBloc>().add(const AppLogoutPressed());
+                    context.read<AuthenticationBloc>().add(AuthenticationEvent.logOut());
                   },
                   child: Text('Logout')),
             ),

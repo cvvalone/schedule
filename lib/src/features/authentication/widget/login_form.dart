@@ -3,12 +3,10 @@ import 'dart:ui';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:formz/formz.dart';
-import 'package:schedule/src/features/authentication/login/cubit/login_cubit.dart';
+import 'package:schedule/src/features/authentication/bloc/authentication_bloc.dart';
 import 'package:schedule/src/utils/constants/colors.dart';
-import 'package:schedule/src/utils/constants/images.dart';
 import 'package:schedule/src/utils/constants/sizes.dart';
 
 class LoginForm extends StatelessWidget {
@@ -16,14 +14,15 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LoginCubit, LoginState>(
+    return BlocListener<AuthenticationBloc, AuthenticationState>(
       listener: (context, state) {
-        if (state.status.isFailure) {
+        if (state.isAuthenticated) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
               SnackBar(
-                content: Text(state.errorMessage ?? 'Authentication Failure'),
+                content: Text(
+                    'Authentication successfull' ?? 'Authentication Failure'),
               ),
             );
         }
@@ -76,7 +75,9 @@ class LoginForm extends StatelessWidget {
                   _EmailInput(),
                   _PasswordInput(),
                   PrivacyCheckbox(),
-                  SizedBox(height: ScheduleSizes.spaceBetweenItemsIn,),
+                  SizedBox(
+                    height: ScheduleSizes.spaceBetweenItemsIn,
+                  ),
                   _LoginButton(),
                   // const SizedBox(height: ScheduleSizes.spaceBetweenItemsIn),
                   // Row(
@@ -107,23 +108,17 @@ class LoginForm extends StatelessWidget {
 class _EmailInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final displayError = context.select(
-      (LoginCubit cubit) => cubit.state.email.displayError,
-    );
-
     return SizedBox(
       width: 258,
       child: TextField(
         key: const Key('loginForm_emailInput_textField'),
-        onChanged: (email) => context.read<LoginCubit>().emailChanged(email),
+        // onChanged: (email) => context.read<LoginCubit>().emailChanged(email),
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
           labelText: 'Пошта',
           helperText: '',
-          errorText: displayError != null
-              ? 'Спробуйте із @vtc.vn.ua'
-              : null,
+          // errorText: asd != null ? 'Спробуйте із @vtc.vn.ua' : null,
           prefixIcon: Icon(Icons.email),
         ),
       ),
@@ -159,21 +154,17 @@ class _PasswordInputState extends State<_PasswordInput> {
 
   @override
   Widget build(BuildContext context) {
-    final displayError = context.select(
-      (LoginCubit cubit) => cubit.state.password.displayError,
-    );
     return SizedBox(
       width: 258,
       child: TextField(
         key: const Key('loginForm_passwordInput_textField'),
-        onChanged: (password) =>
-            context.read<LoginCubit>().passwordChanged(password),
+        onChanged: (value) {},
         obscureText: _isPasswordHidden,
         controller: _passwordController,
         decoration: InputDecoration(
           labelText: 'Пароль',
           helperText: '',
-          errorText: displayError != null ? 'Недійсний пароль' : null,
+          // errorText: displayError != null ? 'Недійсний пароль' : null,
           prefixIcon: Icon(Icons.lock),
           suffixIcon: _isTextNotEmpty
               ? IconButton(
@@ -193,21 +184,13 @@ class _PasswordInputState extends State<_PasswordInput> {
 class _LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final isInProgress = context.select(
-      (LoginCubit cubit) => cubit.state.status.isInProgress,
-    );
-
-    if (isInProgress) return const CircularProgressIndicator();
-
-    final isValid = context.select(
-      (LoginCubit cubit) => cubit.state.isValid,
-    );
-
     return OutlinedButton(
       key: const Key('loginForm_continue_raisedButton'),
-      onPressed: isValid
-          ? () => context.read<LoginCubit>().logInWithCredentials()
-          : null,
+      onPressed: () {
+        final authBloc = context.read<AuthenticationBloc>();
+        authBloc.add(AuthenticationEvent.logIn(
+            login: 'asdasdasd@vtc.vn.ua', password: 'asd'));
+      },
       child: const Text('УВІЙТИ'),
     );
   }
@@ -217,13 +200,15 @@ class _GoogleLoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
-      key: const Key('loginForm_googleLogin_raisedButton'),
-      label: const Text(
-        'УВІЙТИ ЗА ДОПОМОГОЮ GOOGLE',
-      ),
-      icon: const Icon(FontAwesomeIcons.google),
-      onPressed: () => context.read<LoginCubit>().logInWithGoogle(),
-    );
+        key: const Key('loginForm_googleLogin_raisedButton'),
+        label: const Text(
+          'УВІЙТИ ЗА ДОПОМОГОЮ GOOGLE',
+        ),
+        icon: const Icon(FontAwesomeIcons.google),
+        onPressed: () {
+          final authBloc = context.read<AuthenticationBloc>();
+          authBloc.add(AuthenticationEvent.logInWithGoogle());
+        });
   }
 }
 
@@ -267,7 +252,6 @@ class _PrivacyCheckboxState extends State<PrivacyCheckbox> {
                   ),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
-                      
                       showDialog(
                         context: context,
                         builder: (context) => AlertDialog(

@@ -1,8 +1,8 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:schedule/src/data/repos/authentication/models.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:schedule/src/utils/DTO/firebase_to_user.dart';
 
 abstract class IAuthenticationRepository {
   Future<AuthenticatedUser> login(
@@ -24,35 +24,41 @@ class AuthenticationRepository implements IAuthenticationRepository {
   final GoogleSignIn _googleSignIn;
   bool isWeb = kIsWeb;
 
-  Future<void> logInWithGoogle() async {
+  Future<AuthenticatedUser> logInWithGoogle() async {
     try {
       late final firebase_auth.AuthCredential credential;
-      if (isWeb) {
-        final googleProvider = firebase_auth.GoogleAuthProvider();
-        final userCredential = await _firebaseAuth.signInWithPopup(
-          googleProvider,
-        );
-        credential = userCredential.credential!;
-      } else {
-        final googleUser = await _googleSignIn.signIn();
-        final googleAuth = await googleUser!.authentication;
-        credential = firebase_auth.GoogleAuthProvider.credential(
-          accessToken: googleAuth.accessToken,
-          idToken: googleAuth.idToken,
-        );
-      }
+      // if (isWeb) {
+      //   final googleProvider = firebase_auth.GoogleAuthProvider();
+      //   final userCredential = await _firebaseAuth.signInWithPopup(
+      //     googleProvider,
+      //   );
+      //   credential = userCredential.credential!;
+      //   return null;
+      // }
+      final googleUser = await _googleSignIn.signIn();
+      final googleAuth = await googleUser!.authentication;
+      credential = firebase_auth.GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+      final user = UserDTO.fromFirebaseUser(googleUser);
 
       await _firebaseAuth.signInWithCredential(credential);
+
+      return user.toAuthenticatedUser();
     } on firebase_auth.FirebaseAuthException catch (e) {
       throw LogInWithGoogleFailure.fromCode(e.code);
     } catch (e) {
-      LogInWithGoogleFailure(e.toString());
+      throw LogInWithGoogleFailure(e.toString());
     }
   }
 
   @override
-  Future<void> logout() {
-    throw UnimplementedError();
+  Future<void> logout() async {
+    await Future.wait([
+      _firebaseAuth.signOut(),
+      _googleSignIn.signOut(),
+    ]);
   }
 
   @override

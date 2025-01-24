@@ -1,9 +1,6 @@
-import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:schedule/src/features/authentication/login/cubit/login_cubit.dart';
+import 'package:schedule/src/features/authentication/authertication.dart';
 import 'package:schedule/src/features/authentication/widget/login_form.dart';
 import 'package:schedule/src/utils/constants/colors.dart';
 import 'package:schedule/src/utils/constants/images.dart';
@@ -42,12 +39,10 @@ class LoginScreen extends StatelessWidget {
                       : SvgPicture.asset(ScheduleImages.lightAppLogo),
                   backgroundColor: ScheduleColors.mainBgColor,
                 ),
-                SizedBox(height: 65,),
-                BlocProvider(
-                  child: const LoginForm(),
-                  create: (_) =>
-                      LoginCubit(context.read<AuthenticationRepository>()),
+                SizedBox(
+                  height: 65,
                 ),
+                const LoginForm(),
               ],
             ),
           ),
