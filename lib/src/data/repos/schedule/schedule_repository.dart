@@ -13,7 +13,7 @@ class ScheduleRepository {
           ScheduleLesson(
             subject: "Математика",
             teacher: "Іваненко І.І.",
-            timeStart: "9:40",
+            timeStart: "09:40",
             timeEnd: "10:40",
             audithory: "101",
           ),
@@ -39,7 +39,7 @@ class ScheduleRepository {
           ScheduleLesson(
             subject: "Інформатика",
             teacher: "Коваленко К.К.",
-            timeStart: "9:40",
+            timeStart: "09:40",
             timeEnd: "10:40",
             audithory: "202",
           ),
@@ -51,8 +51,8 @@ class ScheduleRepository {
           ScheduleLesson(
             subject: "Англійська мова",
             teacher: "Бондаренко Б.Б.",
-            timeStart: "8:00",
-            timeEnd: "9:40",
+            timeStart: "08:00",
+            timeEnd: "09:40",
             audithory: "301",
           ),
           ScheduleLesson(
@@ -70,7 +70,7 @@ class ScheduleRepository {
           ScheduleLesson(
             subject: "Географія",
             teacher: "Дмитренко Д.Д.",
-            timeStart: "9:40",
+            timeStart: "09:40",
             timeEnd: "10:40",
             audithory: "401",
           ),
@@ -89,8 +89,8 @@ class ScheduleRepository {
           ScheduleLesson(
             subject: "Історія",
             teacher: "Євтушенко Є.Є.",
-            timeStart: "8:30",
-            timeEnd: "9:30",
+            timeStart: "08:30",
+            timeEnd: "09:30",
             audithory: "501",
           ),
           ScheduleLesson(
@@ -114,8 +114,8 @@ class ScheduleRepository {
         ScheduleLesson(
           subject: "Алгебра",
           teacher: "Іваненко І.І.",
-          timeStart: "8:30",
-          timeEnd: "9:30",
+          timeStart: "08:30",
+          timeEnd: "09:30",
           audithory: "101",
         ),
         ScheduleLesson(
@@ -133,7 +133,7 @@ class ScheduleRepository {
         ScheduleLesson(
           subject: "Фізика",
           teacher: "Сидоренко С.С.",
-          timeStart: "9:40",
+          timeStart: "09:40",
           timeEnd: "10:40",
           audithory: "201",
         ),
@@ -152,7 +152,7 @@ class ScheduleRepository {
         ScheduleLesson(
           subject: "Інформатика",
           teacher: "Бондаренко Б.Б.",
-          timeStart: "9:00",
+          timeStart: "09:00",
           timeEnd: "10:00",
           audithory: "301",
         ),
@@ -171,8 +171,8 @@ class ScheduleRepository {
         ScheduleLesson(
           subject: "Англійська мова",
           teacher: "Дмитренко Д.Д.",
-          timeStart: "8:30",
-          timeEnd: "9:30",
+          timeStart: "08:30",
+          timeEnd: "09:30",
           audithory: "401",
         ),
         ScheduleLesson(

@@ -16,6 +16,9 @@ class ScheduleColors{
   static const Color fLoginGradientColor = Color.fromRGBO(36, 64, 111, 0.4);
   static const Color sLoginGradientColor = Color.fromRGBO(69, 123, 213, 0.4);
   
+  static const Color greyColor = Color(0xFF999999);
+  static const Color lightGreyColor = Color(0xFFD7D3D8);
+  
 
   // Text colors
   static const Color wTextColor = Color(0xFFFFFFFF);

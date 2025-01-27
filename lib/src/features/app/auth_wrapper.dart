@@ -20,7 +20,7 @@ class AuthWrapper extends StatelessWidget {
           return Center(
             child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/login');
+                  Navigator.pushReplacementNamed(context, '/home');
                   
                 },
                 child: Text('Login')),
