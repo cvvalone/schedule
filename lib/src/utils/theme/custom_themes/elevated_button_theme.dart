@@ -11,7 +11,7 @@ class ScheduleElevatedButtonTheme{
       backgroundColor: ScheduleColors.bActColor,
       padding: const EdgeInsets.all(16),
       disabledBackgroundColor: ScheduleColors.gTextColor,
-      disabledForegroundColor: ScheduleColors.lbActColor,
+      disabledForegroundColor: ScheduleColors.glSucColor,
       // fixedSize: const Size(120, 40),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
       side: null,

@@ -1,3 +1,4 @@
+import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule/src/data/repos/authentication/repository/authentication_repository.dart';
@@ -34,16 +35,19 @@ class AppScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      themeMode: ThemeMode.system,
-      theme: ScheduleTheme.lightTheme,
-      darkTheme: ScheduleTheme.darkTheme,
-      initialRoute: '/',
-      routes: {
-        '/' : (context) => AuthWrapper(),
-        '/home': (context) => HomePage(), // Головна сторінка
-        '/login': (context) => LoginScreen(), // Сторінка авторизації
-      },
+    return CalendarControllerProvider(
+      controller: EventController(),
+      child: MaterialApp(
+        themeMode: ThemeMode.system,
+        theme: ScheduleTheme.lightTheme,
+        darkTheme: ScheduleTheme.darkTheme,
+        initialRoute: '/',
+        routes: {
+          '/' : (context) => AuthWrapper(),
+          '/home': (context) => HomePage(), // Головна сторінка
+          '/login': (context) => LoginScreen(), // Сторінка авторизації
+        },
+      ),
     );
   }
 }

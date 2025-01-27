@@ -46,4 +46,9 @@ class DateHelper {
     int weekOfYear = ((dayOfYear - date.weekday + 10) / 7).floor();
     return weekOfYear % 2 == 0;
   }
+
+  static String getWeekDayName(int weekday) {
+    const weekDays = ['Нд', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+    return weekDays[weekday % 7];
+  }
 }

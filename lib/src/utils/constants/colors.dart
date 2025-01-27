@@ -18,6 +18,8 @@ class ScheduleColors{
   
   static const Color greyColor = Color(0xFF999999);
   static const Color lightGreyColor = Color(0xFFD7D3D8);
+
+  static const Color headerBgColor = Color(0xFFC9E8FF);
   
 
   // Text colors
@@ -28,7 +30,6 @@ class ScheduleColors{
 
   // Actions colors
   static const Color bActColor = Color(0xFF2A61C6);
-  static const Color lbActColor = Color(0xFFA0C2F4);
 
 
   // Success colors
