@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:schedule/src/data/repos/authentication/repository/authentication_repository.dart';
+import 'package:schedule/src/features/app/auth_wrapper.dart';
 import 'package:schedule/src/features/authentication/authertication.dart';
 import 'package:schedule/src/features/home/home.dart';
 import 'package:schedule/src/utils/theme/theme.dart';
@@ -37,19 +38,9 @@ class AppScreen extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: ScheduleTheme.lightTheme,
       darkTheme: ScheduleTheme.darkTheme,
-      home: BlocListener<AuthenticationBloc, AuthenticationState>(
-        listener: (context, state) {
-          if (state.isAuthenticated) {
-            Navigator.pushReplacementNamed(context, '/home');
-          } else {
-            Navigator.pushReplacementNamed(context, '/login');
-          }
-        },
-        child: Center(
-          child: CircularProgressIndicator(),
-        ),
-      ),
+      initialRoute: '/',
       routes: {
+        '/' : (context) => AuthWrapper(),
         '/home': (context) => HomePage(), // Головна сторінка
         '/login': (context) => LoginScreen(), // Сторінка авторизації
       },

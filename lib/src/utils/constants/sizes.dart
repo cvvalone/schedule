@@ -24,7 +24,7 @@ class ScheduleSizes {
 //Border radius
 
   static const double borderRadiusSm = 4.0;
-  static const double borderRadiusMd = 8.0;
+  static const double borderRadiusMd = 10.0;
 
 // Input field
   static const double inputFieldRadius = 12.0;

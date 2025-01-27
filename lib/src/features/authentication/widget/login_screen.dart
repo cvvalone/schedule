@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:gap/gap.dart';
+import 'package:schedule/src/common/bloc/widgets/google_button.dart';
 import 'package:schedule/src/features/authentication/authertication.dart';
 import 'package:schedule/src/features/authentication/widget/login_form.dart';
 import 'package:schedule/src/utils/constants/colors.dart';
 import 'package:schedule/src/utils/constants/images.dart';
+import 'package:schedule/src/utils/constants/sizes.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -13,36 +16,30 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: ScheduleColors.lbActColor,
       body: Stack(
-        alignment: Alignment.center,
+        alignment: Alignment.topCenter,
         children: [
           Container(
             color: ScheduleColors.mainBgColor,
           ),
-          Positioned.fill(
-            child: Image.asset(
-              ScheduleImages.bigBackgroundPic,
-              // alignment: Alignment.center,
-              fit: BoxFit.cover,
-            ),
-          ),
           SingleChildScrollView(
             child: Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.min,
+              // mainAxisSize: MainAxisSize.min,
               children: [
+                Gap(100),
                 CircleAvatar(
-                  radius: 64,
+                  radius: 70,
                   child: Theme.of(context).brightness == Brightness.dark
                       ? SvgPicture.asset(ScheduleImages.darkAppLogo)
                       : SvgPicture.asset(ScheduleImages.lightAppLogo),
                   backgroundColor: ScheduleColors.mainBgColor,
                 ),
-                SizedBox(
-                  height: 65,
-                ),
+                Gap(65),
                 const LoginForm(),
+                Gap(20),
+                GoogleLoginButton(),
+                Gap(170),
+                PrivacyCheckbox(),
               ],
             ),
           ),

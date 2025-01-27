@@ -15,7 +15,7 @@ class ScheduleOutlinedButtonTheme{
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       side: BorderSide(width: 1.5,color: ScheduleColors.glSucColor,),
       textStyle: TextStyle(
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: FontWeight.w700,
         color: Colors.white,
       ),
@@ -33,7 +33,7 @@ class ScheduleOutlinedButtonTheme{
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       side: null,
       textStyle: TextStyle(
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: FontWeight.w700,
         color: Colors.white,
       ),

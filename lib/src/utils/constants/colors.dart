@@ -24,7 +24,7 @@ class ScheduleColors{
   static const Color bTextColor = Color(0xFF010618);
 
   // Actions colors
-  static const Color bActColor = Color(0xFF4F90F0);
+  static const Color bActColor = Color(0xFF2A61C6);
   static const Color lbActColor = Color(0xFFA0C2F4);
 
 

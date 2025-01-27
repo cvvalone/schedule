@@ -13,10 +13,10 @@ class ScheduleElevatedButtonTheme{
       disabledBackgroundColor: ScheduleColors.gTextColor,
       disabledForegroundColor: ScheduleColors.lbActColor,
       // fixedSize: const Size(120, 40),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
       side: null,
       textStyle: TextStyle(
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: FontWeight.w700,
         color: Colors.white,
       ),
@@ -33,7 +33,7 @@ class ScheduleElevatedButtonTheme{
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       side: null,
       textStyle: TextStyle(
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: FontWeight.w700,
         color: Colors.black,
       ),
