@@ -23,7 +23,7 @@ class _ScheduleMainScreenState extends State<ScheduleMainScreen> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-          title: Text('Сьогодні'),
+          title: Text('Розклад на день'),
           bottom: PreferredSize(
               preferredSize: Size.fromHeight(2),
               child: Container(
