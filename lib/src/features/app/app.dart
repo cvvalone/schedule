@@ -5,6 +5,8 @@ import 'package:schedule/src/data/repos/authentication/repository/authentication
 import 'package:schedule/src/features/app/auth_wrapper.dart';
 import 'package:schedule/src/features/authentication/authertication.dart';
 import 'package:schedule/src/features/home/home.dart';
+import 'package:schedule/src/features/settings/bloc/settings/settings_bloc.dart';
+import 'package:schedule/src/features/settings/view/settings_screen.dart';
 import 'package:schedule/src/utils/theme/theme.dart';
 
 class App extends StatelessWidget {
@@ -24,7 +26,10 @@ class App extends StatelessWidget {
         create: (_) => AuthenticationBloc(
           repository: _authenticationRepository,
         ),
-        child: const AppScreen(),
+        child: BlocProvider(
+          create: (context) => SettingsBloc(),
+          child: AppScreen(),
+        ),
       ),
     );
   }
@@ -35,19 +40,25 @@ class AppScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CalendarControllerProvider(
-      controller: EventController(),
-      child: MaterialApp(
-        themeMode: ThemeMode.system,
-        theme: ScheduleTheme.lightTheme,
-        darkTheme: ScheduleTheme.darkTheme,
-        initialRoute: '/',
-        routes: {
-          '/' : (context) => AuthWrapper(),
-          '/home': (context) => HomePage(), // Головна сторінка
-          '/login': (context) => LoginScreen(), // Сторінка авторизації
-        },
-      ),
+    return BlocBuilder<SettingsBloc, SettingsState>(
+      builder: (context, state) {
+        return CalendarControllerProvider(
+          controller: EventController(),
+          child: MaterialApp(
+            themeMode: state.themeMode,
+            theme: ScheduleTheme.lightTheme,
+            darkTheme: ScheduleTheme.darkTheme,
+            initialRoute: '/',
+            routes: {
+              '/': (context) => AuthWrapper(),
+              '/home': (context) => HomePage(),
+              '/login': (context) => LoginScreen(),
+              '/settings': (context) => SettingsScreen(),
+              // '/aboutUs': (context)  => AboutScreen(),
+            },
+          ),
+        );
+      },
     );
   }
 }

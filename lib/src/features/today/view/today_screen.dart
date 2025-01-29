@@ -1,5 +1,6 @@
 import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:schedule/src/utils/constants/colors.dart';
 import 'package:schedule/src/utils/formatters/date_helper.dart';
 
@@ -132,7 +133,7 @@ class _TodayScreenState extends State<TodayScreen> {
                           fontSize: 14,
                         ),
                       ),
-                      SizedBox(height: 4),
+                      Gap(4),
                       Text(
                         event.description!,
                         style: TextStyle(

@@ -5,15 +5,15 @@ class ScheduleBottomNavbarTheme{
   ScheduleBottomNavbarTheme._();
 
   static final lightBottomNavbarTheme = BottomNavigationBarThemeData(
-    backgroundColor: ScheduleColors.sBgColor,
+    backgroundColor: ScheduleColors.bottomNavBarColor,
     selectedItemColor: ScheduleColors.bActColor,
-    unselectedItemColor: ScheduleColors.gTextColor,
+    unselectedItemColor: ScheduleColors.greyColor,
   );
   
   static final darkBottomNavbarTheme = BottomNavigationBarThemeData(
-    backgroundColor: ScheduleColors.tBgColor,
+    backgroundColor: ScheduleColors.bottomNavBarColor,
     selectedItemColor: ScheduleColors.bActColor,
-    unselectedItemColor: ScheduleColors.gTextColor,
+    unselectedItemColor: ScheduleColors.greyColor,
   );
 
 }

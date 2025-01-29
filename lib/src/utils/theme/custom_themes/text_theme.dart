@@ -8,60 +8,60 @@ class ScheduleTextTheme{
     headlineLarge: TextStyle().copyWith(
       fontWeight: FontWeight.w700,
       fontSize: 32,
-      color: ScheduleColors.wTextColor,
+      color: ScheduleColors.bTextColor,
     ),
     headlineMedium: TextStyle().copyWith(
       fontWeight: FontWeight.w700,
       fontSize: 24,
-      color: ScheduleColors.wTextColor,
+      color: ScheduleColors.bTextColor,
     ),
     headlineSmall: TextStyle().copyWith(
       fontWeight: FontWeight.w700,
       fontSize: 20,
-      color: ScheduleColors.wTextColor,
+      color: ScheduleColors.bTextColor,
     ),
 
     titleLarge: TextStyle().copyWith(
       fontWeight: FontWeight.w700,
       fontSize: 16,
-      color: ScheduleColors.wTextColor,
+      color: ScheduleColors.bTextColor,
     ),
     titleMedium: TextStyle().copyWith(
       fontWeight: FontWeight.w700,
       fontSize: 16,
-      color: ScheduleColors.wTextColor,
+      color: ScheduleColors.bTextColor,
     ),
     titleSmall: TextStyle().copyWith(
       fontWeight: FontWeight.w700,
       fontSize: 16,
-      color: ScheduleColors.wTextColor,
+      color: ScheduleColors.bTextColor,
     ),
 
     bodyLarge: TextStyle().copyWith(
       fontWeight: FontWeight.w700,
       fontSize: 14,
-      color: ScheduleColors.wTextColor,
+      color: ScheduleColors.bTextColor,
     ),
     bodyMedium: TextStyle().copyWith(
       fontWeight: FontWeight.normal,
       fontSize: 14,
-      color: ScheduleColors.wTextColor,
+      color: ScheduleColors.bTextColor,
     ),
     bodySmall: TextStyle().copyWith(
       fontWeight: FontWeight.w700,
       fontSize: 14,
-      color: ScheduleColors.wTextColor.withOpacity(0.5),
+      color: ScheduleColors.bTextColor.withOpacity(0.5),
     ),
 
     labelLarge: TextStyle().copyWith(
       fontWeight: FontWeight.w700,
       fontSize: 12,
-      color: ScheduleColors.wTextColor,
+      color: ScheduleColors.bTextColor,
     ),
     labelMedium: TextStyle().copyWith(
       fontWeight: FontWeight.normal,
       fontSize: 12,
-      color: ScheduleColors.wTextColor.withOpacity(0.5),
+      color: ScheduleColors.bTextColor.withOpacity(0.5),
     ),
   );
 

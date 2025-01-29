@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:schedule/src/data/repos/daily_task/daily_repository.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:schedule/src/data/repos/schedule/schedule_repository.dart';
-import 'package:schedule/src/features/authentication/bloc/authentication_bloc.dart';
-import 'package:schedule/src/features/daily/bloc/daily_bloc.dart';
-import 'package:schedule/src/features/daily/view/daily_screen.dart';
+import 'package:schedule/src/features/profile/widget/profile_screen.dart';
 import 'package:schedule/src/features/schedule/bloc/schedule_bloc.dart';
 import 'package:schedule/src/features/schedule/view/schedule_screen.dart';
 import 'package:schedule/src/features/today/view/today_screen.dart';
+import 'package:schedule/src/utils/constants/images.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -54,23 +53,15 @@ class _HomePageState extends State<HomePage> {
             },
             child: ScheduleMainScreen(),
           ),
-          BlocProvider(
-            create: (context) {
-              final DailyRepository repository = DailyRepository();
-              return DailyBloc(repository: repository);
-                // ..add(LoadDailyTask(user.id));
-            },
-            child: DailyScreen(),
-          ),
-          Scaffold(
-            body: Center(
-              child: ElevatedButton(
-                  onPressed: () {
-                    context.read<AuthenticationBloc>().add(AuthenticationEvent.logOut());
-                  },
-                  child: Text('Logout')),
-            ),
-          ),
+          // BlocProvider(
+          //   create: (context) {
+          //     final DailyRepository repository = DailyRepository();
+          //     return DailyBloc(repository: repository);
+          //       // ..add(LoadDailyTask(user.id));
+          //   },
+          //   child: DailyScreen(),
+          // ),
+          ProfileScreen(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -79,21 +70,19 @@ class _HomePageState extends State<HomePage> {
         currentIndex: _selectedIndex,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.today),
-            label: 'Сьогодні',
+            activeIcon: SvgPicture.asset(ScheduleImages.todayIconActive),
+            icon: SvgPicture.asset(ScheduleImages.todayIcon),
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.view_week),
-            label: 'Розклад',
+            activeIcon: SvgPicture.asset(ScheduleImages.weekIconActive),
+            icon: SvgPicture.asset(ScheduleImages.weekIcon),
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.assignment),
-            label: 'Плани',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            tooltip: 'Налаштування',
-            label: 'Налаштування',
+            activeIcon: SvgPicture.asset(ScheduleImages.profileIconActive),
+            icon: SvgPicture.asset(ScheduleImages.profileIcon),
+            label: '',
           )
         ],
       ),

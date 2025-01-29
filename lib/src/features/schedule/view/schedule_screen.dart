@@ -64,7 +64,11 @@ class _ScheduleMainScreenState extends State<ScheduleMainScreen> {
                         teacher: item.teacher,
                         index: index,
                       ),
-                      Divider(color: ScheduleColors.lightGreyColor, thickness: 2, height: 2,)
+                      Divider(
+                        color: ScheduleColors.lightGreyColor,
+                        thickness: 2,
+                        height: 2,
+                      ),
                     ],
                   );
                 },
