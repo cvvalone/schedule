@@ -42,6 +42,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
 
   @override
   Widget build(BuildContext context) {
+    final Color color = ScheduleColors.getRandomColor();
     return Row(
       children: [
         Padding(
@@ -89,7 +90,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
         Container(
           height: 50,
           width: 1, // Товщина лінії
-          color: ScheduleColors.gSucColor,
+          color: color,
         ),
         // Текстова частина
         Expanded(
@@ -103,7 +104,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
-                    color: ScheduleColors.gSucColor,
+                    color: color,
                   ),
                 ),
                 const Gap(ScheduleSizes.spaceBetweenItems),

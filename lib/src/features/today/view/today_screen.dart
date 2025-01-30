@@ -19,11 +19,11 @@ class _TodayScreenState extends State<TodayScreen> {
     _eventController.add(
       CalendarEventData(
         title: 'ПІ',
-        date: DateTime(2025, 1, 29, 10, 0),
-        startTime: DateTime(2025, 1, 29, 9, 40),
-        endTime: DateTime(2025, 1, 29, 10, 40),
+        date: DateTime(2025, 1, 30, 10, 0),
+        startTime: DateTime(2025, 1, 30, 9, 40),
+        endTime: DateTime(2025, 1, 30, 10, 40),
         description: 'Ауд: 102',
-        color: Colors.blue,
+        color: ScheduleColors.getRandomColor(),
       ),
     );
     super.initState();
@@ -107,7 +107,7 @@ class _TodayScreenState extends State<TodayScreen> {
             return Column(
               children: events.map((event) {
                 return Container(
-                  width: boundry.width,
+                  width: boundry.width - 5,
                   height: boundry.height,
                   decoration: BoxDecoration(
                     color: event.color,

@@ -162,9 +162,10 @@ class _LoginButton extends StatelessWidget {
     return OutlinedButton(
       key: const Key('loginForm_continue_raisedButton'),
       onPressed: () {
-        final authBloc = context.read<AuthenticationBloc>();
-        authBloc.add(AuthenticationEvent.logIn(
-            login: 'asdasdasd@vtc.vn.ua', password: 'asd'));
+        // final authBloc = context.read<AuthenticationBloc>();
+        // authBloc.add(AuthenticationEvent.logIn(
+        //     login: 'asdasdasd@vtc.vn.ua', password: 'asd'));
+        Navigator.pushNamed(context, '/home');
       },
       child: const Text('Увійти'),
     );

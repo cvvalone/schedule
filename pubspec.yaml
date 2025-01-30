@@ -49,5 +49,4 @@ flutter:
   - assets/icons/todayIcon.svg
   - assets/icons/weekIcon.svg
   - assets/icons/profileIcon.svg
-  - assets/bgPic.svg
-  - assets/bgPic.png
+  - assets/images/avatarImage.jpg

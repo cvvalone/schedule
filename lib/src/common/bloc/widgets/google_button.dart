@@ -18,8 +18,9 @@ class GoogleLoginButton extends StatelessWidget {
         ),
         icon: SvgPicture.asset(ScheduleImages.googleColorLogo, height: 18, width: 18,),
         onPressed: () {
-          final authBloc = context.read<AuthenticationBloc>();
-          authBloc.add(AuthenticationEvent.logInWithGoogle());
+          // final authBloc = context.read<AuthenticationBloc>();
+          // authBloc.add(AuthenticationEvent.logInWithGoogle());
+          Navigator.pushNamed(context, '/home');
         });
   }
 }

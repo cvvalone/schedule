@@ -1,6 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
-class ScheduleColors{
+class ScheduleColors {
   ScheduleColors._();
 
   //Theme colors backgrounds
@@ -9,20 +11,18 @@ class ScheduleColors{
   static const Color bottomNavBarColor = Color(0xFFC9E8FF);
 
   static const Color deepBlueColor = Color(0xFF2A61C6);
-  
-  
+
   static const Color mainBgColor = Color(0xFF4297D7);
-  
+
   static const Color fLoginGradientColor = Color.fromRGBO(36, 64, 111, 0.4);
   static const Color sLoginGradientColor = Color.fromRGBO(69, 123, 213, 0.4);
-  
+
   static const Color greyColor = Color(0xFF999999);
   static const Color redColor = Color(0xFFE53945);
 
   static const Color lightGreyColor = Color(0xFFD7D3D8);
 
   static const Color headerBgColor = Color(0xFFC9E8FF);
-  
 
   // Text colors
   static const Color wTextColor = Color(0xFFFFFFFF);
@@ -34,9 +34,19 @@ class ScheduleColors{
   // Actions colors
   static const Color bActColor = Color(0xFF2A61C6);
 
-
   // Success colors
   static const Color gSucColor = Color(0xFF00B0AD);
   static const Color glSucColor = Color(0xFFCCEFEF);
 
+  static const List<Color> genColors = [
+    Color(0xFFC44EFB),
+    Color(0xFFFFC374),
+    Color(0xFF4AD2C9),
+    Color(0xFF536EFF),
+  ];
+
+  static Color getRandomColor(){
+    final random = Random();
+    return genColors[random.nextInt(genColors.length)];
+  }
 }

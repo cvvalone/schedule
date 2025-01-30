@@ -97,9 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextButton(
-                    onPressed: () {
-                      //TODO: LOGOUT LOGIC
-                    },
+                    onPressed: () => _showLogoutDialog(context),
                     child: Text(
                       'Вихід',
                       style: TextStyle(
@@ -111,10 +109,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   Text(
                     'Версія 0.0.0',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w300
-                    ),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
                   ),
                 ],
               )
@@ -122,6 +117,65 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> _showLogoutDialog(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Center(
+            child: Text('Вийти з профіля'),
+          ),
+          titleTextStyle: TextStyle(
+            color: ScheduleColors.bTextColor,
+            fontSize: 17,
+            fontWeight: FontWeight.w500,
+            fontFamily: 'SF Pro',
+          ),
+          content: Container(
+            alignment: Alignment.center,
+            height: 13,
+            child: Text(
+              'Ви дійсно хочете вийти з профіля?',
+            ),
+          ),
+          contentTextStyle: TextStyle(
+            color: ScheduleColors.bTextColor,
+            fontSize: 13,
+            fontWeight: FontWeight.w400,
+            fontFamily: 'SF Pro',
+          ),
+          actionsAlignment: MainAxisAlignment.spaceBetween,
+          actions: [
+            TextButton(
+              onPressed: () {},
+              child: Text(
+                'Залишитись',
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: 'SF Pro',
+                  color: ScheduleColors.mainBgColor,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {},
+              child: Text(
+                'Вийти',
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: 'SF Pro',
+                  color: ScheduleColors.redColor,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:schedule/src/features/authentication/authertication.dart';
 import 'package:schedule/src/features/settings/bloc/settings/settings_bloc.dart';
 import 'package:schedule/src/utils/constants/colors.dart';
 
