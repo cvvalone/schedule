@@ -165,7 +165,7 @@ class _LoginButton extends StatelessWidget {
         // final authBloc = context.read<AuthenticationBloc>();
         // authBloc.add(AuthenticationEvent.logIn(
         //     login: 'asdasdasd@vtc.vn.ua', password: 'asd'));
-        Navigator.pushNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, '/home');
       },
       child: const Text('Увійти'),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:schedule/src/data/repos/schedule/schedule_repository.dart';
 import 'package:schedule/src/features/profile/widget/profile_screen.dart';
 import 'package:schedule/src/features/schedule/bloc/schedule_bloc.dart';
@@ -46,7 +47,7 @@ class _HomePageState extends State<HomePage> {
           TodayScreen(),
           BlocProvider(
             create: (context) {
-              final ScheduleRepository repository = ScheduleRepository();
+              final repository = GetIt.instance<ScheduleRepository>();
               // final bool isEven = DateHelper.isEvenWeek(DateTime.now());
               return ScheduleBloc(repository: repository)
                 ..add(ScheduleEvent.loadSchedule());

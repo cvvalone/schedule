@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:schedule/src/data/repos/schedule/model/schedule_day/schedule_day.dart';
 import 'package:schedule/src/features/schedule/bloc/schedule_bloc.dart';
 import 'package:schedule/src/features/schedule/view/schedule_card.dart';
 import 'package:schedule/src/utils/constants/colors.dart';
@@ -15,11 +16,11 @@ class ScheduleMainScreen extends StatefulWidget {
 
 class _ScheduleMainScreenState extends State<ScheduleMainScreen> {
   final daysGen = DateHelper.generateWeekdays(5);
-  DateTime today =  DateTime.now();
+  DateTime today = DateTime.now();
 
   @override
   void initState() {
-    today =  DateTime.now(); 
+    today = DateTime.now();
     super.initState();
   }
 
@@ -72,38 +73,53 @@ class _ScheduleMainScreenState extends State<ScheduleMainScreen> {
               child: CircularProgressIndicator(),
             );
           } else if (state.isLoaded) {
-            final days = state.schedule.days;
-            final day = days.firstWhere((element) =>
-                element.weekDay ==
-                DateHelper.getWeekDayName(today.weekday));
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: ListView.builder(
-                padding: EdgeInsets.symmetric(
-                    vertical: ScheduleSizes.spaceBetweenItems),
-                itemCount: day.lessons.length,
-                itemBuilder: (context, index) {
-                  final item = day.lessons[index];
-                  return Column(
-                    children: [
-                      ScheduleCard(
-                        room: item.audithory,
-                        timeStart: item.timeStart,
-                        timeEnd: item.timeEnd,
-                        subject: item.subject,
-                        teacher: item.teacher,
-                        index: index,
-                      ),
-                      Divider(
-                        color: ScheduleColors.lightGreyColor,
-                        thickness: 2,
-                        height: 2,
-                      ),
-                    ],
-                  );
-                },
+            List<ScheduleDay> days = state.schedule.days;
+            ScheduleDay day = days.firstWhere(
+              orElse: () => ScheduleDay(
+                weekDay: DateHelper.getWeekDayName(today.weekday),
+                lessons: [],
               ),
+              (element) =>
+                  element.weekDay == DateHelper.getWeekDayName(today.weekday),
             );
+            if (day.lessons.length == 0)
+              return Center(
+                child: Text(
+                  'На цей день немає даних.',
+                  style: TextStyle(
+                    fontSize: 20
+                  ),
+                ),
+              );
+            else
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: ListView.builder(
+                  padding: EdgeInsets.symmetric(
+                      vertical: ScheduleSizes.spaceBetweenItems),
+                  itemCount: day.lessons.length,
+                  itemBuilder: (context, index) {
+                    final item = day.lessons[index];
+                    return Column(
+                      children: [
+                        ScheduleCard(
+                          room: item.audithory,
+                          timeStart: item.timeStart,
+                          timeEnd: item.timeEnd,
+                          subject: item.subject,
+                          teacher: item.teacher,
+                          index: index,
+                        ),
+                        Divider(
+                          color: ScheduleColors.lightGreyColor,
+                          thickness: 2,
+                          height: 2,
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              );
           } else {
             if (state.message != null) {
               return Center(
@@ -125,7 +141,7 @@ class _ScheduleMainScreenState extends State<ScheduleMainScreen> {
       lastDate: DateTime(DateTime.now().year, DateTime.now().month + 5),
     );
 
-    if(pickedDate != null && pickedDate != today){
+    if (pickedDate != null && pickedDate != today) {
       setState(() {
         today = pickedDate;
       });

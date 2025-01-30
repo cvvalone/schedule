@@ -1,9 +1,8 @@
 import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:schedule/src/data/repos/authentication/repository/authentication_repository.dart';
+import 'package:schedule/src/data/repos/authentication/authentication_repository.dart';
 import 'package:schedule/src/features/aboutUs/widget/about_us_screen.dart';
-import 'package:schedule/src/features/app/auth_wrapper.dart';
 import 'package:schedule/src/features/authentication/authertication.dart';
 import 'package:schedule/src/features/home/home.dart';
 import 'package:schedule/src/features/settings/bloc/settings/settings_bloc.dart';

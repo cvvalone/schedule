@@ -29,6 +29,7 @@ dependencies:
   firebase_auth: ^5.4.1
   gap: ^3.0.1
   calendar_view: ^1.4.0
+  get_it: ^8.0.3
   
 
 dev_dependencies:

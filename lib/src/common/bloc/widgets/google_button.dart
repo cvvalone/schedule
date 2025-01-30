@@ -20,7 +20,7 @@ class GoogleLoginButton extends StatelessWidget {
         onPressed: () {
           // final authBloc = context.read<AuthenticationBloc>();
           // authBloc.add(AuthenticationEvent.logInWithGoogle());
-          Navigator.pushNamed(context, '/home');
+          Navigator.pushReplacementNamed(context, '/home');
         });
   }
 }

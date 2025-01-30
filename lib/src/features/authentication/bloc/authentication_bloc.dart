@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:schedule/src/data/repos/authentication/models.dart';
-import 'package:schedule/src/data/repos/authentication/repository/authentication_repository.dart';
+import 'package:schedule/src/data/repos/authentication/authentication_repository.dart';
 
 part 'authentication_state.dart';
 part 'authentication_event.dart';
