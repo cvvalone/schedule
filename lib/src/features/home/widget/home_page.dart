@@ -44,7 +44,15 @@ class _HomePageState extends State<HomePage> {
         },
         controller: _pageController,
         children: [
-          TodayScreen(),
+          BlocProvider(
+            create: (context) {
+              final repository = GetIt.instance<ScheduleRepository>();
+              // final bool isEven = DateHelper.isEvenWeek(DateTime.now());
+              return ScheduleBloc(repository: repository)
+                ..add(ScheduleEvent.loadSchedule());
+            },
+            child: TodayScreen(),
+          ),
           BlocProvider(
             create: (context) {
               final repository = GetIt.instance<ScheduleRepository>();
@@ -54,14 +62,6 @@ class _HomePageState extends State<HomePage> {
             },
             child: ScheduleMainScreen(),
           ),
-          // BlocProvider(
-          //   create: (context) {
-          //     final DailyRepository repository = DailyRepository();
-          //     return DailyBloc(repository: repository);
-          //       // ..add(LoadDailyTask(user.id));
-          //   },
-          //   child: DailyScreen(),
-          // ),
           ProfileScreen(),
         ],
       ),

@@ -8,6 +8,7 @@ import 'package:schedule/firebase_options.dart';
 import 'package:schedule/src/common/bloc/AppBlocObserver.dart';
 import 'package:schedule/src/data/repos/authentication/authentication_repository.dart';
 import 'package:schedule/src/data/repos/schedule/schedule_repository.dart';
+import 'package:schedule/src/data/services/api_service.dart';
 import 'package:schedule/src/features/app/app.dart';
 
 Future<void> main() async {
@@ -23,8 +24,11 @@ Future<void> main() async {
 
   void setupLocator(){
     locator.registerLazySingleton<ScheduleRepository>(() => MockScheduleRepository());
+    locator.registerLazySingleton<ApiService>(() => MockApiService());
   }
 
+  setupLocator();
+  
   final authenticationRepository = AuthenticationRepository();
 
   FirebaseFirestore.instance.settings = const Settings(

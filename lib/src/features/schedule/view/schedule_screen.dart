@@ -15,7 +15,6 @@ class ScheduleMainScreen extends StatefulWidget {
 }
 
 class _ScheduleMainScreenState extends State<ScheduleMainScreen> {
-  final daysGen = DateHelper.generateWeekdays(5);
   DateTime today = DateTime.now();
 
   @override

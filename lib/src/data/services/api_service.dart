@@ -3,6 +3,7 @@ import 'package:schedule/src/data/repos/schedule/model/schedule_week/schedule_we
 
 abstract class ApiService {
   Future<ScheduleWeek> getSchedule();
+  Future<ScheduleWeek> getNotEvenSchedule();
 }
 
 class MockApiService implements ApiService {
@@ -14,9 +15,24 @@ class MockApiService implements ApiService {
   Future<ScheduleWeek> getSchedule() async {
     try {
       final response = await _dio.get('/schedule');
+      if (response.statusCode == 200) {
+        return ScheduleWeek.fromJson(response.data.first);
+      }
+      throw Exception('Code: ${response.statusCode}, Message: ${response.statusMessage}');
+    } catch (e) {
+      throw Exception(
+          'Сталась помилка при отриманні розкладу: ${e.toString()}');
+    }
+  }
+
+  @override
+  Future<ScheduleWeek> getNotEvenSchedule() async {
+    try {
+      final response = await _dio.get('/scheduleNEven');
       return ScheduleWeek.fromJson(response.data);
     } catch (e) {
-      throw Exception('Сталась помилка при отриманні розкладу: ${e.toString()}');
+      throw Exception(
+          'Сталась помилка при отриманні розкладу: ${e.toString()}');
     }
   }
 }

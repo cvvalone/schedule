@@ -30,6 +30,7 @@ dependencies:
   gap: ^3.0.1
   calendar_view: ^1.4.0
   get_it: ^8.0.3
+  auto_size_text: ^3.0.0
   
 
 dev_dependencies:

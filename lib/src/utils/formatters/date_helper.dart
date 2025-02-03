@@ -6,34 +6,6 @@ class DateHelper {
     return formatter.format(date);
   }
 
-  static List<Map<String, dynamic>> generateWeekdays(int numberOfDays) {
-    final today = DateTime.now();
-    final weekdayNames = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт'];
-
-    // Генеруємо список робочих днів
-    List<Map<String, dynamic>> days = [];
-    int addedDays = 0;
-    DateTime currentDate = today;
-
-    while (addedDays < numberOfDays) {
-      // Перевіряємо, чи не субота або неділя
-      if (currentDate.weekday >= DateTime.monday &&
-          currentDate.weekday <= DateTime.friday) {
-        days.add({
-          'day': currentDate.day,
-          'weekday': weekdayNames[currentDate.weekday - 1],
-          'fullDate':
-              '${currentDate.day} ${weekdayNames[currentDate.weekday - 1]}',
-        });
-        addedDays++;
-      }
-      // Переходимо до наступного дня
-      currentDate = currentDate.add(const Duration(days: 1));
-    }
-
-    return days;
-  }
-
   static bool isToday(String date) {
     final now = DateTime.now();
     final weekdayNames = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт'];
@@ -50,5 +22,28 @@ class DateHelper {
   static String getWeekDayName(int weekday) {
     const weekDays = ['Нд', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
     return weekDays[weekday % 7];
+  }
+
+  static int getWeekDayDate(String weekDay) {
+    const weekDays = ['Нд', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+    int weekDayIndex = weekDays.indexWhere((element) => weekDay == element);
+
+    if (weekDayIndex == -1)
+      return DateTime.now()
+          .day; // Якщо день не знайдено, повертаємо сьогоднішній день
+
+    DateTime now = DateTime.now();
+    DateTime firstDayOfWeek =
+        now.subtract(Duration(days: now.weekday % 7)); // Отримуємо неділю
+    DateTime targetDate = firstDayOfWeek.add(Duration(days: weekDayIndex));
+
+    return targetDate.day; // Повертаємо число
+  }
+
+  static List<int> takePartsFromHour(String hour) {
+    List<String> startParts = hour.split(':');
+    int startHour = int.parse(startParts[0]);
+    int startMinute = int.parse(startParts[1]);
+    return [startHour, startMinute];
   }
 }
