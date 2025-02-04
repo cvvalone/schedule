@@ -49,10 +49,10 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? themeMode = freezed,
+    Object? themeMode = null,
   }) {
     return _then(_value.copyWith(
-      themeMode: freezed == themeMode
+      themeMode: null == themeMode
           ? _value.themeMode
           : themeMode // ignore: cast_nullable_to_non_nullable
               as ThemeMode,
@@ -84,10 +84,10 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? themeMode = freezed,
+    Object? themeMode = null,
   }) {
     return _then(_$SettingsStateImpl(
-      themeMode: freezed == themeMode
+      themeMode: null == themeMode
           ? _value.themeMode
           : themeMode // ignore: cast_nullable_to_non_nullable
               as ThemeMode,
@@ -97,15 +97,25 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SettingsStateImpl implements _SettingsState {
+class _$SettingsStateImpl
+    with DiagnosticableTreeMixin
+    implements _SettingsState {
   const _$SettingsStateImpl({required this.themeMode});
 
   @override
   final ThemeMode themeMode;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'SettingsState(themeMode: $themeMode)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'SettingsState'))
+      ..add(DiagnosticsProperty('themeMode', themeMode));
   }
 
   @override
@@ -113,12 +123,12 @@ class _$SettingsStateImpl implements _SettingsState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SettingsStateImpl &&
-            const DeepCollectionEquality().equals(other.themeMode, themeMode));
+            (identical(other.themeMode, themeMode) ||
+                other.themeMode == themeMode));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(themeMode));
+  int get hashCode => Object.hash(runtimeType, themeMode);
 
   /// Create a copy of SettingsState
   /// with the given fields replaced by the non-null parameter values.
@@ -222,12 +232,18 @@ class __$$ToggleThemeImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ToggleThemeImpl implements _ToggleTheme {
+class _$ToggleThemeImpl with DiagnosticableTreeMixin implements _ToggleTheme {
   const _$ToggleThemeImpl();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'SettingsEvent.toggleTheme()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'SettingsEvent.toggleTheme'));
   }
 
   @override

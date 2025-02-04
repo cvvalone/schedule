@@ -18,7 +18,8 @@ class MockApiService implements ApiService {
       if (response.statusCode == 200) {
         return ScheduleWeek.fromJson(response.data.first);
       }
-      throw Exception('Code: ${response.statusCode}, Message: ${response.statusMessage}');
+      throw Exception(
+          'Code: ${response.statusCode}, Message: ${response.statusMessage}');
     } catch (e) {
       throw Exception(
           'Сталась помилка при отриманні розкладу: ${e.toString()}');
@@ -29,7 +30,11 @@ class MockApiService implements ApiService {
   Future<ScheduleWeek> getNotEvenSchedule() async {
     try {
       final response = await _dio.get('/scheduleNEven');
-      return ScheduleWeek.fromJson(response.data);
+      if (response.statusCode == 200) {
+        return ScheduleWeek.fromJson(response.data);
+      }
+      throw Exception(
+          'Code: ${response.statusCode}, Message: ${response.statusMessage}');
     } catch (e) {
       throw Exception(
           'Сталась помилка при отриманні розкладу: ${e.toString()}');
