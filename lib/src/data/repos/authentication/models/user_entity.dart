@@ -10,6 +10,7 @@ abstract class UserEntity {
     required final String? displayName,
     required final String? photoUrl,
     required final String? email,
+    required final String accessToken,
   }) = AuthenticatedUser;
 
   bool get isAuthenticated;
@@ -63,6 +64,7 @@ class AuthenticatedUser implements UserEntity {
     required final this.displayName,
     required final this.photoUrl,
     required final this.email,
+    required final this.accessToken,
   });
 
   @override
@@ -79,6 +81,7 @@ class AuthenticatedUser implements UserEntity {
   final String? displayName;
   final String? photoUrl;
   final String? email;
+  final String? accessToken;
 
   @override
   T when<T extends Object?>({

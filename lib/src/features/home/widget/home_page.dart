@@ -3,10 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:schedule/src/data/repos/schedule/schedule_repository.dart';
+import 'package:schedule/src/features/notification/widget/notification_screen.dart';
 import 'package:schedule/src/features/profile/widget/profile_screen.dart';
 import 'package:schedule/src/features/schedule/bloc/schedule_bloc.dart';
 import 'package:schedule/src/features/schedule/view/schedule_screen.dart';
 import 'package:schedule/src/features/today/view/today_screen.dart';
+import 'package:schedule/src/utils/constants/colors.dart';
 import 'package:schedule/src/utils/constants/images.dart';
 
 class HomePage extends StatefulWidget {
@@ -62,6 +64,7 @@ class _HomePageState extends State<HomePage> {
             },
             child: ScheduleMainScreen(),
           ),
+          NotificationScreen(),
           ProfileScreen(),
         ],
       ),
@@ -78,6 +81,23 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             activeIcon: SvgPicture.asset(ScheduleImages.weekIconActive),
             icon: SvgPicture.asset(ScheduleImages.weekIcon),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            activeIcon: SvgPicture.asset(
+              ScheduleImages.notificationIconActive,
+              colorFilter:
+                  ColorFilter.mode(ScheduleColors.greyColor, BlendMode.srcIn),
+              width: 40,
+              height: 40,
+            ),
+            icon: SvgPicture.asset(
+              width: 40,
+              height: 40,
+              ScheduleImages.notificationIcon,
+              colorFilter:
+                  ColorFilter.mode(ScheduleColors.greyColor, BlendMode.srcIn),
+            ),
             label: '',
           ),
           BottomNavigationBarItem(

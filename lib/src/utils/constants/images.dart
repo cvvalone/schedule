@@ -13,6 +13,9 @@ class ScheduleImages {
   static const profileIconActive = 'assets/icons/profileActiveIcon.svg';
   static const todayIconActive = 'assets/icons/todayActiveIcon.svg';
   static const weekIconActive = 'assets/icons/weekActiveIcon.svg';
+
+  static const notificationIcon = 'assets/icons/notifications.svg';
+  static const notificationIconActive = 'assets/icons/notifications-active.svg';
   
   
   

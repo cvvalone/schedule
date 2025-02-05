@@ -40,6 +40,8 @@ class AuthenticationBloc
       final newUser =
           await _repository.login(login: event.login, password: event.password);
 
+      final accessToken = newUser.accessToken;
+
       emit(AuthenticationState.success(user: newUser));
     } on Object catch (e) {
       emit(AuthenticationState.error(user: state.user, message: e.toString()));
@@ -58,7 +60,7 @@ class AuthenticationBloc
     try {
       emit(AuthenticationState.inProgress(user: state.user));
       final newUser = await _repository.logInWithGoogle();
-      emit(AuthenticationState.success(user: newUser));
+      emit(AuthenticationState.success());
     } on Object catch (e) {
       emit(AuthenticationState.error(user: state.user, message: e.toString()));
       rethrow;
